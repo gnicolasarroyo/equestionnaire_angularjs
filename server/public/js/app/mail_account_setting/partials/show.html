@@ -1,0 +1,33 @@
+<div>
+	<h3>{{ title }}</h3>	
+</div>
+<div>
+	<div>
+		<p>Name <strong>{{ mail_account_setting.name }}</strong></p>
+	</div>
+	<div>
+		<p>Host <strong>{{ mail_account_setting.host }}</strong></p>
+	</div>
+	<div>
+		<p>Port <strong>{{ mail_account_setting.port }}</strong></p>
+	</div>
+	<div>
+		<p>User name <strong>{{ mail_account_setting.username }}</strong></p>
+	</div>
+	<div>
+		<p>Password <strong>********</strong></p>
+	</div>
+	<div>
+		<p>Created <strong>{{ mail_account_setting.created_at }}</strong></p>
+	</div>
+	<div>
+		<p>Last modified <strong>{{ mail_account_setting.updated_at }}</strong></p>
+	</div>
+	<div>
+		<a href="{{ links.back_to_list }}">Back to list</a> 
+		- 
+		<a href="{{ links.base_url + mail_account_setting._id + '/edit/' }}">Edit</a> 
+		- 
+		<a href="{{ links.base_url + mail_account_setting._id + '/delete/' }}">Delete</a>
+	</div>
+</div>

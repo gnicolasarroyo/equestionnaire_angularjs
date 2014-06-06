@@ -1,0 +1,91 @@
+<div>
+	<h3>{{ title }}</h3>
+</div>
+<div>
+	<form ng-submit='save(questionnaire)'>
+		<div>
+			<label for="c-title">Name</label>
+			<input type="text" name="title" id="c-title" ng-model="questionnaire.title">
+		</div>
+		<div>
+			<label for="c-purpose">Purpose</label>
+			<textarea name="purpose" id="c-purpose" ng-model="questionnaire.purpose"></textarea>
+		</div>
+		<div>
+			<div>
+				<h4>Add/Edit question</h4>
+				<div>
+					<label for="c-query">Query</label>
+					<textarea name="query" id="c-query" ng-model="question.query"></textarea>
+				</div>
+				<div>
+					<p>Type</p>
+					<label for="c-question_type_text">Text
+						<input type="radio" name="question_type" id="c-question_type_text" ng-model="question.question_type" value="1">
+					</label>
+					<label for="c-question_type_option">Option
+						<input type="radio" name="question_type" id="c-question_type_option" ng-model="question.question_type" value="2">
+					</label>
+					<label for="c-question_type_multipleoption">Multiple option
+						<input type="radio" name="question_type" id="c-question_type_multipleoption" ng-model="question.question_type" value="3">
+					</label>
+				</div>
+				<div ng-if="question.question_type != 1">
+					<p>Add choice</p>
+					<div>
+						<label for="c-value">Value</label>
+						<input type="text" name="value" id="c-value" ng-model="choice.value">
+						<button type="button" ng-click="saveChoice(choice)">Save choice</button>
+					</div>
+					<div>
+						<p>Choices</p>
+						<table>
+							<tbody>
+								<tr ng-repeat="choice in question.choices">
+									<td>
+										{{ choice.value }}
+									</td>
+									<td>
+										<button type="button" ng-click="deleteChoice(choice)">Delete</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div>
+					<button type="button" ng-click="saveQuestion(question)">Save question</button>
+					<button type="button" ng-click="resetQuestion()">Reset</button>
+				</div>
+			</div>
+			<div>
+				<h4>Questions</h4>
+				<table>
+					<tbody>
+						<tr ng-repeat="question in questionnaire.questions">
+							<td>{{ question.query }}</td>
+							<td>{{ question.question_type }}</td>
+							<td ng-if="$first && !$last">
+								<button type="button" ng-click="downQuestion(question)">Down</button>
+							</td>
+							<td ng-if="$middle && !$first && !$last">
+								<button type="button" ng-click="upQuestion(question)">Up</button>
+								<button type="button" ng-click="downQuestion(question)">Down</button>
+							</td>
+							<td ng-if="$last && !$first">
+								<button type="button" ng-click="upQuestion(question)">Up</button>
+							</td>
+							<td><button type="button" ng-click="editQuestion(question)">Edit</button></td>
+							<td><button type="button" ng-click="deleteQuestion(question)">Delete</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div>
+			<input type="submit" value="Save">
+			 - 
+			<a href="{{ links.back_to_list }}">Back to list</a>
+		</div>
+	</form>
+</div>

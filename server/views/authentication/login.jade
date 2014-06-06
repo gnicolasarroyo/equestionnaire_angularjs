@@ -1,0 +1,20 @@
+extends ../layout_public
+
+block content
+    h3 Login
+    form(method='post')
+        div
+            ul
+                each item in errors
+                    li #{item.field}: #{item.notification}
+        div
+            label(for='c-email') Email
+            input(type='text', name='email', id='c-email')
+        div
+            label(for='c-password') Password
+            input(type='password', name='password', id='c-password')
+        div
+            input(type='submit', value='submit')
+        div
+            a(href='/authentication/user-register')
+                |Create new account

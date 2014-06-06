@@ -1,0 +1,27 @@
+<div>
+	<h3>{{ title }}</h3>
+	<a href="{{ links.new }}">New contact</a>
+</div>
+<div>
+	<table ng-show='list_on'>
+		<thead>
+			<tr>
+				<th>name</th>
+				<th>email</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat='contact in contacts'>
+				<td><a href="{{ links.base_url + contact._id + '/detail/' }}">{{ contact.name }}</a></td>
+				<td>{{ contact.email }}</td>
+				<td><a href="{{ links.base_url + contact._id + '/edit/' }}">Edit</a></td>
+				<td><a href="{{ links.base_url + contact._id + '/delete/' }}">Delete</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<p ng-hide='list_on'>
+		Contacts are not found, add a new menu from the "New contact".
+	</p>
+</div>

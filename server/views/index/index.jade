@@ -1,0 +1,17 @@
+extends ../layout_private
+
+block content
+    //- Menu
+    nav
+        span
+            strong
+                |Menu 
+        a(href='#/contacts/') * Contacts 
+        a(href='#/contact-lists/') * Contact Lists 
+        a(href='#/mail-account-settings/') * Mail account settings 
+        a(href='#/questionnaires/') * Questionnaires
+        a(href='#/surveys/') * Surveys 
+
+    //- App
+    div(ng-app='equestionnaire', class='view-animate-container')
+        div(ng-view, class='view-animate')

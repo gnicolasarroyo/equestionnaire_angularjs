@@ -1,0 +1,26 @@
+extends ../layout_public
+
+block content
+    h3 User register
+    form(method='post')
+        div
+            ul
+                each item in errors
+                    li #{item.field}: #{item.notification}
+        div
+            label(for='c-first_name') First name
+            input(type='text', name='first_name', id='c-first_name')
+        div
+            label(for='c-last_name') Last name
+            input(type='text', name='last_name', id='c-last_name')
+        div
+            label(for='c-email') Email
+            input(type='text', name='email', id='c-email')
+        div
+            label(for='c-password') Password
+            input(type='password', name='password', id='c-password')
+        div
+            label(for='c-confirm_password') Confirm password
+            input(type='password', name='confirm_password', id='c-confirm_password')
+        div
+            input(type='submit', value='submit')

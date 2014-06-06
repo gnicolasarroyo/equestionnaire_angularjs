@@ -1,0 +1,36 @@
+<div>
+	<h3>{{ title }}</h3>	
+</div>
+<div>
+	<form ng-submit='save(mail_account_setting)'>
+		<div>
+			<label for="c-name">Name</label>
+			<input type="text" name="name" id="c-name" ng-model="mail_account_setting.name">
+		</div>
+		<div>
+			<label for="c-host">Host</label>
+			<input type="text" name="host" id="c-host" ng-model="mail_account_setting.host">
+		</div>
+		<div>
+			<label for="c-port">Port</label>
+			<input type="number" name="port" id="c-port" ng-model="mail_account_setting.port">
+		</div>
+		<div>
+			<label for="c-username">User name</label>
+			<input type="email" name="username" id="c-username" ng-model="mail_account_setting.username">
+		</div>
+		<div>
+			<label for="c-password">Password</label>
+			<input type="password" name="password" id="c-password" ng-model="mail_account_setting.password">
+		</div>
+		<div>
+			<label for="c-confirm-password">Confirm password</label>
+			<input type="password" name="confirm_password" id="c-confirm-password" ng-model="mail_account_setting.confirm_password">
+		</div>
+		<div>
+			<input type="submit" value="Save">
+			 - 
+			<a href="{{ links.back_to_list }}">Back to list</a>
+		</div>
+	</form>
+</div>

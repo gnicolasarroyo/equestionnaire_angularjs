@@ -1,0 +1,38 @@
+<div>
+	<h3>{{ title }}</h3>	
+</div>
+<div>
+	<div>
+		<p>Name <strong>{{ contact_list.name }}</strong></p>
+	</div>
+	<div>
+		<p>Contacts</p>
+		<div>
+			<label for="c-filter">Filter</label>
+			<input type="text" name="filter" id="c-filter" ng-model="filter">
+		</div>
+		<table>
+			<tbody>
+				<tr ng-repeat="contact in contact_list.contacts | filter:filter | orderBy:'name'">
+					<td>
+						<div>{{ contact.name }}</div>
+						<div>{{ contact.email }}</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<p>Created <strong>{{ contact_list.created_at }}</strong></p>
+	</div>
+	<div>
+		<p>Last modified <strong>{{ contact_list.updated_at }}</strong></p>
+	</div>
+	<div>
+		<a href="{{ links.back_to_list }}">Back to list</a> 
+		- 
+		<a href="{{ links.base_url + contact_list._id + '/edit/' }}">Edit</a> 
+		- 
+		<a href="{{ links.base_url + contact_list._id + '/delete/' }}">Delete</a>
+	</div>
+</div>

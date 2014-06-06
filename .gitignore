@@ -1,0 +1,29 @@
+# 
+# Exclude node_modules folder. (Get packages > $ npm install)
+#  
+node_modules/
+*.log
+
+#
+# Exclude extra files in public folder
+#
+server/public/*
+## JS
+!server/public/js/
+server/public/js/*
+!server/public/js/app/
+!server/public/js/libs/
+server/public/js/libs/*
+!server/public/js/libs/angular-1.2.16/
+server/public/js/libs/angular-1.2.16/*
+!server/public/js/libs/angular-1.2.16/angular.min.js
+!server/public/js/libs/angular-1.2.16/angular-route.min.js
+!server/public/js/libs/angular-1.2.16/angular-resourse.min.js
+!server/public/js/libs/angular-1.2.16/angular-animate.min.js
+!server/public/js/libs/jquery-1.11.1.min.js
+!server/public/js/libs/jquery.validate.min.js
+## CSS
+!server/public/css/
+server/public/css/*
+!server/public/css/style.css
+

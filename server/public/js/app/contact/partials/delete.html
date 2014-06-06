@@ -1,0 +1,24 @@
+<div>
+	<h3>{{ title }}</h3>	
+</div>
+<div>
+	<form ng-submit='delete(contact)'>
+		<div>
+			<p>Name <strong>{{ contact.name }}</strong></p>
+		</div>
+		<div>
+			<p>Email <strong>{{ contact.email }}</strong></p>
+		</div>
+		<div>
+			<p>Created <strong>{{ contact.created_at }}</strong></p>
+		</div>
+		<div>
+			<p>Last modified <strong>{{ contact.updated_at }}</strong></p>
+		</div>
+		<div>
+			<input type="submit" value="Delete">
+			 - 
+			<a href="{{ links.back_to_list }}">Back to list</a>
+		</div>
+	</form>
+</div>

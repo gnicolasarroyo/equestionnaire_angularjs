@@ -1,0 +1,62 @@
+<div>
+	<h3>{{ title }}</h3>	
+</div>
+<div>
+	<form ng-submit='save(contact_list)'>
+		<div>
+			<label for="c-name">Name</label>
+			<input type="text" name="name" id="c-name" ng-model="contact_list.name">
+		</div>
+		<div>
+			<!-- Contacts Available 
+			====================================-->
+			<div>
+				<h4>Contacts Available</h4>
+				<div>
+					<label for="c-avaibleFilter">Filter</label>
+					<input type="text" name="avaibleFilter" id="c-avaibleFilter" ng-model="avaible_filter">
+				</div>
+				<table>
+					<tbody>
+						<tr ng-repeat="contact in avaible_list | filter:avaible_filter | orderBy:'name'">
+							<td>
+								<button type="button" ng-click="avaibleCheck(contact)">add</button>
+							</td>
+							<td>
+								<div>{{ contact.name }}</div>
+								<div>{{ contact.email }}</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- Contacts Selected 
+			====================================-->
+			<div>
+				<h4>Contacts Selected</h4>
+				<div>
+					<label for="c-selectedFilter">Filter</label>
+					<input type="text" name="selectedFilter" id="c-selectedFilter" ng-model="selected_filter">
+				</div>
+				<table>
+					<tbody>
+						<tr ng-repeat="contact in contact_list.contacts | filter:selected_filter | orderBy:'name'">
+							<td>
+								<button type="button" ng-click="selectedCheck(contact)">remove</button>
+							</td>
+							<td>
+								<div>{{ contact.name }}</div>
+								<div>{{ contact.email }}</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div>
+			<input type="submit" value="Save">
+			 - 
+			<a href="{{ links.back_to_list }}">Back to list</a>
+		</div>
+	</form>
+</div>

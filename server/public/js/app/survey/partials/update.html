@@ -1,0 +1,137 @@
+<div>
+	<h3>{{ title }}</h3>	
+</div>
+<div>
+	<form ng-submit='save(survey)'>
+		<div>
+			<label for="c-start-date">Start date</label>
+			<input type="date" name="start_date" id="c-start-date" ng-model="survey.start_date" value="{{ survey.start_date | date: 'yyyy-MM-dd' }}">
+		</div>
+		<div>
+			<label for="c-effective-days">Effective days</label>
+			<input type="number" name="effective_days" id="c-effective-days" ng-model="survey.effective_days" min="1" max="30">
+		</div>
+
+		<!-- Questionnaires
+		============================-->
+		<div ng-hide="questionnaires.length > 0">
+			<h5>Questionnaire</h5>
+			<p>No questionnaires were found, you need to <strong>create a questionnaire</strong> to submit your survey.</p>
+		</div>
+		<div ng-show="questionnaires.length > 0">
+			<label for="c-questionnaire">Questionnaire</label>
+			<select ng-model="survey.questionnaire">
+				<option ng-repeat="questionnaire in questionnaires" value="{{ questionnaire._id }}">{{ questionnaire.title }}</option>	
+			</select>
+		</div>
+
+		<!-- Mail Account Settings
+		============================-->
+		<div ng-hide="mail_account_settings.length > 0">
+			<h5>Mail Account Setting</h5>
+			<p>No mail account settings were found, you need to <strong>create a mail account setting</strong> to submit your survey.</p>
+		</div>
+		<div ng-show="mail_account_settings.length > 0">
+			<label for="c-mail-account-setting">Mail Account Setting</label>
+			<select ng-model="survey.mail_account_setting">
+				<option ng-repeat="mail_account_setting in mail_account_settings" value="{{ mail_account_setting._id }}">{{ mail_account_setting.name }}</option>	
+			</select>
+		</div>
+		
+		<!-- Contacts & Contact List
+		============================-->
+		<div ng-hide="contacts.length > 0">
+			<h5>Contacts</h5>
+			<p>No contacts were found, you need to <strong>create a contact</strong> to submit your survey.</p>
+		</div>
+		<div ng-hide="contact_lists.length > 0">
+			<h5>Contact lists</h5>
+			<p>No contact lists were found, you need to <strong>create a contact list</strong> to submit your survey.</p>
+		</div>
+		<div ng-show="contacts.length > 0 || contact_lists.length > 0">
+			<!-- Available list
+			====================================-->
+			<div>
+				<h5>Contacts & Contact lists available</h5>
+				<div>
+					<label for="c-only-contact-lists">Only contact lists</label>
+					<input type="checkbox" name="only_contact_lists" id="c-only-contact-lists" ng-model="only_contact_lists">		
+				</div>
+				<div>
+					<label for="c-avaibleFilter">Filter</label>
+					<input type="text" name="avaibleFilter" id="c-avaibleFilter" ng-model="avaible_filter">
+				</div>
+				<table>
+					<tbody>
+						<tr ng-hide="only_contact_lists" ng-repeat="contact in contacts | filter:avaible_filter | orderBy:'name'">
+							<td>
+								<button type="button" ng-click="avaibleCheckContact(contact)">add</button>
+							</td>
+							<td>
+								<div>Contact</div>
+								<div>{{ contact.name }}</div>
+								<div>{{ contact.email }}</div>
+							</td>
+						</tr>
+						<tr ng-hide="only_contact_lists">
+							<td>----------</td>
+							<td>-------------------------</td>
+						</tr>
+						<tr ng-repeat="contact_list in contact_lists | filter:avaible_filter | orderBy:'name'">
+							<td>
+								<button type="button" ng-click="avaibleCheckContactList(contact_list)">add</button>
+							</td>
+							<td>
+								<div>Contact list</div>
+								<div>{{ contact_list.name }}</div>
+								<div>{{ contact_list.contacts.length }} contacts</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- Selected list
+			====================================-->
+			<div>
+				<h5>Contacts & Contact lists selected</h5>
+				<div>
+					<label for="c-selectedFilter">Filter</label>
+					<input type="text" name="selectedFilter" id="c-selectedFilter" ng-model="selected_filter">
+				</div>
+				<table>
+					<tbody>
+						<tr ng-hide="only_contact_lists" ng-repeat="contact in survey.contacts | filter:selected_filter | orderBy:'name'">
+							<td>
+								<button type="button" ng-click="selectedCheckContact(contact)">Remove</button>
+							</td>
+							<td>
+								<div>Contact</div>
+								<div>{{ contact.name }}</div>
+								<div>{{ contact.email }}</div>
+							</td>
+						</tr>
+						<tr ng-hide="only_contact_lists">
+							<td>----------</td>
+							<td>-------------------------</td>
+						</tr>
+						<tr ng-repeat="contact_list in survey.contact_lists | filter:selected_filter | orderBy:'name'">
+							<td>
+								<button type="button" ng-click="selectedCheckContactList(contact_list)">Remove</button>
+							</td>
+							<td>
+								<div>Contact list</div>
+								<div>{{ contact_list.name }}</div>
+								<div>{{ contact_list.contacts.length }} contacts</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div>
+			<input type="submit" value="Save">
+			 - 
+			<a href="{{ links.back_to_list }}">Back to list</a>
+		</div>
+	</form>
+</div>

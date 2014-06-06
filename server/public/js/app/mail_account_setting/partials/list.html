@@ -1,0 +1,31 @@
+<div>
+	<h3>{{ title }}</h3>
+	<a href="{{ links.new }}">New mail account setting</a>
+</div>
+<div>
+	<table ng-show='list_on'>
+		<thead>
+			<tr>
+				<th>name</th>
+				<th>host</th>
+				<th>port</th>
+				<th>user name</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat='mail_account_setting in mail_account_settings'>
+				<td><a href="{{ links.base_url + mail_account_setting._id + '/detail/' }}">{{ mail_account_setting.name }}</a></td>
+				<td>{{ mail_account_setting.host }}</td>
+				<td>{{ mail_account_setting.port }}</td>
+				<td>{{ mail_account_setting.username }}</td>
+				<td><a href="{{ links.base_url + mail_account_setting._id + '/edit/' }}">Edit</a></td>
+				<td><a href="{{ links.base_url + mail_account_setting._id + '/delete/' }}">Delete</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<p ng-hide='list_on'>
+		Mail ccount settings are not found, add a new menu from the "New mail account setting".
+	</p>
+</div>

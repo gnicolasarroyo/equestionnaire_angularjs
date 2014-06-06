@@ -1,0 +1,63 @@
+doctype html
+html(lang='es-AR')
+    head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='eQuestionnaire, ¡encuestas online!')
+        title eQuestionnaire
+        //- Styles
+        //- =======================
+        link(rel='stylesheet', href='/css/style.css')
+        //- Libs
+        //- =======================
+        script(type='text/javascript', src='/js/libs/angular-1.2.16/angular.min.js')
+        script(type='text/javascript', src='/js/libs/angular-1.2.16/angular-route.min.js')
+        script(type='text/javascript', src='/js/libs/angular-1.2.16/angular-resource.min.js')
+        script(type='text/javascript', src='/js/libs/angular-1.2.16/angular-animate.min.js')
+        //- App
+        //- =======================
+        script(type='text/javascript', src='/js/app/contact/__init__.js')
+        script(type='text/javascript', src='/js/app/contact/services/contact.js')
+        script(type='text/javascript', src='/js/app/contact/controllers/list.js')
+        script(type='text/javascript', src='/js/app/contact/controllers/show.js')
+        script(type='text/javascript', src='/js/app/contact/controllers/create.js')
+        script(type='text/javascript', src='/js/app/contact/controllers/update.js')
+        script(type='text/javascript', src='/js/app/contact/controllers/delete.js')
+        script(type='text/javascript', src='/js/app/contact_list/__init__.js')
+        script(type='text/javascript', src='/js/app/contact_list/services/contact_list.js')
+        script(type='text/javascript', src='/js/app/contact_list/services/contact.js')
+        script(type='text/javascript', src='/js/app/contact_list/controllers/list.js')
+        script(type='text/javascript', src='/js/app/contact_list/controllers/show.js')
+        script(type='text/javascript', src='/js/app/contact_list/controllers/create.js')
+        script(type='text/javascript', src='/js/app/contact_list/controllers/update.js')
+        script(type='text/javascript', src='/js/app/contact_list/controllers/delete.js')
+        script(type='text/javascript', src='/js/app/mail_account_setting/__init__.js')
+        script(type='text/javascript', src='/js/app/mail_account_setting/services/mail_account_setting.js')
+        script(type='text/javascript', src='/js/app/mail_account_setting/controllers/list.js')
+        script(type='text/javascript', src='/js/app/mail_account_setting/controllers/show.js')
+        script(type='text/javascript', src='/js/app/mail_account_setting/controllers/create.js')
+        script(type='text/javascript', src='/js/app/mail_account_setting/controllers/update.js')
+        script(type='text/javascript', src='/js/app/mail_account_setting/controllers/delete.js')
+        script(type='text/javascript', src='/js/app/questionnaire/__init__.js')
+        script(type='text/javascript', src='/js/app/questionnaire/services/questionnaire.js')
+        script(type='text/javascript', src='/js/app/questionnaire/controllers/list.js')
+        script(type='text/javascript', src='/js/app/questionnaire/controllers/show.js')
+        script(type='text/javascript', src='/js/app/questionnaire/controllers/create.js')
+        script(type='text/javascript', src='/js/app/questionnaire/controllers/update.js')
+        script(type='text/javascript', src='/js/app/questionnaire/controllers/delete.js')
+        script(type='text/javascript', src='/js/app/survey/__init__.js')
+        script(type='text/javascript', src='/js/app/survey/services/survey.js')
+        script(type='text/javascript', src='/js/app/survey/controllers/list.js')
+        script(type='text/javascript', src='/js/app/survey/controllers/show.js')
+        script(type='text/javascript', src='/js/app/survey/controllers/create.js')
+        script(type='text/javascript', src='/js/app/survey/controllers/update.js')
+        script(type='text/javascript', src='/js/app/survey/controllers/delete.js')
+        script(type='text/javascript', src='/js/app/__main__.js')
+    body
+        div
+            h1 eQuestionnaire 
+        div
+            |Welcome #{username} - 
+            a(href='/authentication/logout')
+                |logout
+        block content
