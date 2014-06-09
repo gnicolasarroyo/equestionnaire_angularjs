@@ -4,7 +4,8 @@
 /**
  * Get Dependencies
  */
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+	questionSchema 	= require('./question').schema();
 
 
 /**
@@ -14,13 +15,19 @@ var schema = new mongoose.Schema({
 	user: 					{ type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	start_date:   	 		{ type: Date, required: true},
 	effective_days:  		{ type: Number, required: true },
-	questionnaire: 			{ type: mongoose.Schema.Types.ObjectId, ref: 'Questionnaire' },
+	state: 					{ type: Number, required: true },
+	title: 					{ type: String, required: true },
+	introduction: 			{ type: String, required: true },
+	questions: 				[questionSchema],
 	mail_account_setting: 	{ type: mongoose.Schema.Types.ObjectId, ref: 'MailAccountSetting' },
 	contacts: 				[{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }],
 	contact_lists: 			[{ type: mongoose.Schema.Types.ObjectId, ref: 'ContactList' }],
 	created_at: 			{ type: Date, default: Date.now() },
 	updated_at: 			{ type: Date, default: Date.now() }
 });
+
+
+exports.state_code = { NEWLY_CREATED: 1, UPDATED: 2, ONLINE: 3, FINISH: 4 };
 
 
 /**

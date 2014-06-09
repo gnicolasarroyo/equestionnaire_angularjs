@@ -21,7 +21,7 @@
 		<div ng-show="questionnaires.length > 0">
 			<label for="c-questionnaire">Questionnaire</label>
 			<select ng-model="survey.questionnaire">
-				<option ng-repeat="questionnaire in questionnaires" value="{{ questionnaire._id }}">{{ questionnaire.title }}</option>	
+				<option ng-repeat="questionnaire in questionnaires" value="{{ $index }}">{{ questionnaire.title }}</option>	
 			</select>
 		</div>
 

@@ -21,7 +21,9 @@ angular.module('equestionnaire.survey')
 			$scope.survey = {
 				start_date: 			new Date(),
 				effective_days: 		30,
-				questionnaire: 			'',
+				title: 					'',
+				introduction: 			'',
+				questions: 				[],
 				mail_account_setting: 	'',
 				contacts: 				[],
 				contact_lists: 			[]
@@ -121,17 +123,19 @@ angular.module('equestionnaire.survey')
 		    	console.log(data);
 		    }
 
-			var newSurvey 		= new SurveyResource();
+			var newSurvey 		= new SurveyResource(), 
+				questionnaire 	= $scope.questionnaires[survey.questionnaire];
 		    
 		    newSurvey.start_date 				= survey.start_date;
 			newSurvey.effective_days 			= survey.effective_days;
-			newSurvey.questionnaire 			= survey.questionnaire;
+			newSurvey.title  					= questionnaire.title;
+		    newSurvey.introduction 				= questionnaire.purpose;
+		    newSurvey.questions 				= questionnaire.questions;
 			newSurvey.mail_account_setting 		= survey.mail_account_setting;
 			newSurvey.contacts 					= survey.contacts;
 			newSurvey.contact_lists 			= survey.contact_lists;
 
-		    newSurvey.$save(onSuccess, onError);
-		    
+		    newSurvey.$save(onSuccess, onError);  
 		};
 
 		

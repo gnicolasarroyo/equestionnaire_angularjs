@@ -6,38 +6,48 @@ html(lang='es-AR')
         meta(name='description', content='eQuestionnaire, ¡Encuestas online!')
         title eQuestionnaire
         link(rel='stylesheet', href='/css/style.css')
+        script(type='text/javascript', src='/js/libs/jquery-1.11.1.min.js')
+        script(type='text/javascript', src='/js/libs/jquery.validate.min.js')
+        script(type='text/javascript', src='/js/libs/survey.validate.js')
     body
-        
         div
-            h1= survey.questionnaire.title
+            h1= survey.title
             p
                 small
                     | Start date #{start_date} - End date #{end_date} - Effective days #{survey.effective_days} - Send by #{survey.user.first_name} #{survey.user.last_name}
-            p= survey.questionnaire.purpose
-        form(method='post')
+            p= survey.introduction
+        form#survey_form(method='post')
             ol
-                each question in survey.questionnaire.questions
+                each question in survey.questions
                     li 
                         p= question.query
                         case question.question_type
                             when 2
-                                p Select one option
                                 ul
+                                    li
+                                        p Select one option
                                     each choice in question.choices
                                         li
                                             label(for=choice._id)
                                                 input(type='radio', name=question._id, id=choice._id, value=choice._id)
                                                 |#{choice.value}
+                                script
+                                    $(function (){ $('input[name="#{question._id}"]').rules('add', { required: true }) });
                             when 3
-                                p Select one or many options
                                 ul
+                                    li
+                                        p Select one or many options
                                     each choice in question.choices
                                         li 
                                             label(for=choice._id)
                                                 input(type='checkbox', name=question._id, id=choice._id, value=choice._id)
                                                 |#{choice.value}
+                                script
+                                    $(function (){ $('input[name="#{question._id}"]').rules('add', { required: true }) });
                             default
                                 p Write your answer
-                                    textarea(name=question._id)
+                                textarea(name=question._id)
+                                script
+                                    $(function (){ $('textarea[name="#{question._id}"]').rules('add', { required: true }) });
             div
                 button(type='submit') Submit

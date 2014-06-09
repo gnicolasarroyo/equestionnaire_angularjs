@@ -1,20 +1,27 @@
 extends ../layout_public
 
 block content
-    h3 Login
-    form(method='post')
-        div
-            ul
-                each item in errors
-                    li #{item.field}: #{item.notification}
-        div
-            label(for='c-email') Email
-            input(type='text', name='email', id='c-email')
-        div
-            label(for='c-password') Password
-            input(type='password', name='password', id='c-password')
-        div
-            input(type='submit', value='submit')
-        div
-            a(href='/authentication/user-register')
-                |Create new account
+    div.container-fluid
+        div.row-fluid
+            div.col-md-12.col-md-offset-4
+                h1 Iniciar sesión
+    div.container-fluid
+        div.row-fluid
+            div.col-md-4.col-md-offset-4
+                form(method='post')
+                    div.form-group
+                        ul
+                            each item in errors
+                                li #{item.field}: #{item.notification}
+                    div.form-group
+                        label(for='c-email') Correo electrónico
+                        input.form-control(type='text', name='email', id='c-email')
+                    div.form-group
+                        label(for='c-password') Contraseña
+                        input.form-control(type='password', name='password', id='c-password')
+                    div
+                        button.btn.btn-primary(type='submit') Iniciar sesión
+                br
+                br
+                p ¿No dispones de una cuenta para iniciar sesión?
+                    a(href='/authentication/user-register')  Crea una cuenta aqui.

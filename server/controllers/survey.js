@@ -44,7 +44,7 @@ var surveyController = {
 			2.B - sino existe error
 			*/
 			surveyModel.detail(req.params.survey_id, function (err, survey) {
-				if (err) res.send(404, err);
+				if (err || survey == null) res.send(404, err);
 			    else {
 			    	if (!survey.existsContact(req.params.contact_id)) res.send(404, {});
 			    	else {
@@ -72,7 +72,7 @@ var surveyController = {
 			    		answerModel.contactAlreadyAnswered(req.params.survey_id, req.params.contact_id, function (err, answers) {
 			    			if (err || answers.length > 0) res.redirect('/survey/was-answered');
 			    			else {
-			    				answerModel.create(req.params.survey_id, req.params.contact_id, survey.questionnaire.questions, req.body);
+			    				answerModel.create(req.params.survey_id, req.params.contact_id, survey.questions, req.body);
 			    				res.render('survey/answer_success', {});
 			    			}
 			    		});
@@ -111,6 +111,9 @@ var surveyController = {
 		surveyModel.create(req.session.user, {
 			start_date:   	 		req.body.start_date,
 			effective_days:  		req.body.effective_days,
+			title: 					req.body.title,
+			introduction: 			req.body.introduction,
+			questions: 				req.body.questions,
 			questionnaire: 			req.body.questionnaire,
 			mail_account_setting: 	req.body.mail_account_setting,
 			contacts: 				req.body.contacts,
@@ -127,7 +130,9 @@ var surveyController = {
 		surveyModel.update(req.session.user, req.params.survey_id, {
 			start_date:   	 		req.body.start_date,
 			effective_days:  		req.body.effective_days,
-			questionnaire: 			req.body.questionnaire,
+			title: 					req.body.title,
+			introduction: 			req.body.introduction,
+			questions: 				req.body.questions,
 			mail_account_setting: 	req.body.mail_account_setting,
 			contacts: 				req.body.contacts,
 			contact_lists: 			req.body.contact_lists

@@ -36,7 +36,6 @@ var questionnaireController = {
 		questionnaireModel.create(req.session.user, {
 			title: 		req.body.title,
 			purpose: 	req.body.purpose,
-			status: 	req.body.status,
 			questions:  req.body.questions
 		}, function (err, questionnaire) {
 			if (err) res.send(404, err);
@@ -50,7 +49,6 @@ var questionnaireController = {
 		questionnaireModel.update(req.session.user, req.params.questionnaire_id, {
 			title: 		req.body.title,
 			purpose: 	req.body.purpose,
-			status: 	req.body.status,
 			questions:  req.body.questions
 		}, function (err, questionnaire) {
 			if (err) res.send(404, err);

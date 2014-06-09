@@ -18,7 +18,6 @@
 			<tr ng-repeat='questionnaire in questionnaires'>
 				<td><a href="{{ links.base_url + questionnaire._id + '/detail/' }}">{{ questionnaire.title }}</a></td>
 				<td>{{ questionnaire.purpose }}</td>
-				<td>{{ questionnaire.status }}</td>
 				<td>{{ questionnaire.questions.length }}</td>
 				<td><a href="{{ links.base_url + questionnaire._id + '/edit/' }}">Edit</a></td>
 				<td><a href="{{ links.base_url + questionnaire._id + '/delete/' }}">Delete</a></td>

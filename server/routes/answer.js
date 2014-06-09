@@ -17,19 +17,7 @@ var answerController 	= require('../controllers/answer'),
 /* Answers */
 
 // GET /answers
-api_router.get('/answers', authorization.apiRequireLogin, answerController.list);
-
-// GET /answers/:answer_id
-api_router.get('/answers/:answer_id', authorization.apiRequireLogin, answerController.show);
-
-// POST /answers
-api_router.post('/answers', authorization.apiRequireLogin, answerController.create);
-
-// PUT /answers/:answer_id
-api_router.put('/answers/:answer_id', authorization.apiRequireLogin, answerController.update);
-
-// DELETE /answers/:answer_id
-api_router.delete('/answers/:answer_id', authorization.apiRequireLogin, answerController.delete);
+api_router.get('/answers/:survey_id', authorization.apiRequireLogin, answerController.list);
 
 
 module.exports.api = api_router;

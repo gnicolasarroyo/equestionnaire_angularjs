@@ -10,10 +10,40 @@
 			<p>Effective days <strong>{{ survey.effective_days }}</strong></p>
 		</div>
 
-		<!-- Questionnaires
-		============================-->
 		<div>
-			<p>Questionnaire <strong>{{ survey.questionnaire.title }}</strong></p>
+			<p>State
+				<strong ng-if="survey.state == 1">Newly created</strong>
+				<strong ng-if="survey.state == 2">Updated</strong>
+				<strong ng-if="survey.state == 3">Online</strong>
+				<strong ng-if="survey.state == 4">Finish</strong>
+			</p>
+		</div>
+
+		<div>
+			<p>Title <strong>{{ survey.title }}</strong></p>
+		</div>
+
+		<div>
+			<p>Introduction <strong>{{ survey.introduction }}</strong></p>
+		</div>
+
+		<div>
+			<h4>Questions</h4>
+			<table>
+				<tbody>
+					<tr ng-repeat="question in survey.questions">
+						<td>{{ question.query }}</td>
+						<td>{{ question.question_type }}</td>
+						<td>
+							<ol>
+								<li ng-repeat="choice in question.choices">
+									{{ choice.value }}
+								</li>
+							</ol>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 		<!-- Mail Account Settings

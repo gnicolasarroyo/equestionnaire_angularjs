@@ -4,7 +4,7 @@
 /**
  * Get Dependecies
  */
-var answerModel = require('../models/authentication');
+var answerModel = require('../models/answer');
 
 
 /**
@@ -15,31 +15,10 @@ var answerController = {
 	/* list */
 	
 	list: function (req, res, next) {
-
-	},
-
-	/* show */
-
-	show: function (req, res, next) {
-
-	},
-
-	/* create */
-	
-	create: function (req, res, next) {
-
-	},
-
-	/* update */
-
-	update: function (req, res, next) {
-
-	},
-
-	/* delete */
-
-	delete: function (req, res, next) {
-
+		answerModel.list(req.params.survey_id, function (err, answers) {
+			if (err) res.send(404, err);
+		    else res.json(answers);
+		});
 	}
 };
 

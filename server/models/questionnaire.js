@@ -4,8 +4,7 @@
 /**
  * Get Dependencies
  */
-var questionnaireSchema 	= require('../schemas/questionnaire').model(),
-	questionnaire_status 	= require('../schemas/questionnaire').status;
+var questionnaireSchema 	= require('../schemas/questionnaire').model();
 
 
 /**
@@ -17,7 +16,7 @@ var questionnaireModel = {
 	
 	list: function (user_id, fn) {
 		questionnaireSchema
-			.find({ user: user_id }, '_id title purpose status questions created_at updated_at')
+			.find({ user: user_id }, '_id title purpose questions created_at updated_at')
 			.exec(function (err, questionnaires) {
 				fn(err, questionnaires);
 			});
@@ -27,7 +26,7 @@ var questionnaireModel = {
 
 	show: function (user_id, questionnaire_id, fn) {
 		questionnaireSchema
-			.findOne({ user: user_id, _id: questionnaire_id }, '_id title purpose status questions created_at updated_at')
+			.findOne({ user: user_id, _id: questionnaire_id }, '_id title purpose questions created_at updated_at')
 			.exec(function (err, questionnaire) {
 				fn(err, questionnaire);
 			});
@@ -41,7 +40,6 @@ var questionnaireModel = {
 		newQuestionnaire.user = user_id;
 		if (questionnaire.title) 		newQuestionnaire.title 		= questionnaire.title;
 		if (questionnaire.purpose) 		newQuestionnaire.purpose	= questionnaire.purpose;
-		if (questionnaire.status) 		newQuestionnaire.status 	= questionnaire_status.NEWLY_CREATED; // questionnaire.status;
 		if (questionnaire.questions) 	newQuestionnaire.questions 	= questionnaire.questions;
 
 		newQuestionnaire.save(function (err) {
@@ -58,7 +56,6 @@ var questionnaireModel = {
 			} else {
 				if (questionnaire.title) 		editQuestionnaire.title			= questionnaire.title;
 				if (questionnaire.purpose) 		editQuestionnaire.purpose 		= questionnaire.purpose;
-				if (questionnaire.status) 		editQuestionnaire.status 		= questionnaire_status.IN_CONSTRUCTION; //questionnaire.status;
 				if (questionnaire.questions) 	editQuestionnaire.questions 	= questionnaire.questions;
 				editQuestionnaire.updated_at = Date.now();
 

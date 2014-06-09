@@ -8,14 +8,14 @@ html(lang='es-AR')
         link(rel='stylesheet', href='/css/style.css')
     body
         div
-            h1= survey.questionnaire.title
+            h1= survey.title
             p
                 small
                     | Start date #{start_date} - End date #{end_date} - Effective days #{survey.effective_days} - Send by #{survey.user.first_name} #{survey.user.last_name}
-            p= survey.questionnaire.purpose
+            p= survey.introduction
         div    
             ol
-                each question in survey.questionnaire.questions
+                each question in survey.questions
                     li 
                         p= question.query
                         case question.question_type

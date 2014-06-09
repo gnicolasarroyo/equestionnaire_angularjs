@@ -17,7 +17,7 @@ var answerModel = {
 	list: function (survey_id, fn) {
 		answerSchema
 			.find({ survey: survey_id }, '_id survey contact question content_response created_at updated_at')
-			.populate({path: 'user', select: 'first_name last_name'})
+			.populate({path: 'contact', select: '_id name email'})
 			.exec(function (err, answers) {
 				fn(err, answers);
 			});

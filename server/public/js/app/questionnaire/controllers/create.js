@@ -20,7 +20,6 @@ angular.module('equestionnaire.questionnaire')
 			$scope.questionnaire = {
 				title: '',
 				purpose: '',
-				status: 0,
 				questions: []
 			};
 
@@ -154,7 +153,6 @@ angular.module('equestionnaire.questionnaire')
 			var newQuestionnaire 		= new QuestionnaireResource();
 		    newQuestionnaire.title	 	= questionnaire.title;
 		    newQuestionnaire.purpose 	= questionnaire.purpose;
-		    newQuestionnaire.status 	= 1;
 		    newQuestionnaire.questions 	= questionnaire.questions;
 
 		    function onSuccess (data) {

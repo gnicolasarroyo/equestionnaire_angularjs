@@ -1,26 +1,36 @@
 extends ../layout_public
 
 block content
-    h3 User register
-    form(method='post')
-        div
-            ul
-                each item in errors
-                    li #{item.field}: #{item.notification}
-        div
-            label(for='c-first_name') First name
-            input(type='text', name='first_name', id='c-first_name')
-        div
-            label(for='c-last_name') Last name
-            input(type='text', name='last_name', id='c-last_name')
-        div
-            label(for='c-email') Email
-            input(type='text', name='email', id='c-email')
-        div
-            label(for='c-password') Password
-            input(type='password', name='password', id='c-password')
-        div
-            label(for='c-confirm_password') Confirm password
-            input(type='password', name='confirm_password', id='c-confirm_password')
-        div
-            input(type='submit', value='submit')
+    div.container-fluid
+        div.row-fluid
+            div.col-md-12.col-md-offset-4
+                h1 Crear una cuenta
+    div.container-fluid
+        div.row-fluid
+            div.col-md-4.col-md-offset-4
+                p Si ya dispones de una cuenta puedes
+                    a(href='/authentication/login')  iniciar sesión
+                    |. Sino, completa con tu información los datos requeridos a continuación.
+                form(method='post')
+                    div
+                        ul
+                            each item in errors
+                                li #{item.field}: #{item.notification}
+                    div.form-group
+                        label(for='c-first_name') Nombres
+                        input.form-control(type='text', name='first_name', id='c-first_name')
+                    div.form-group
+                        label(for='c-last_name') Apellidos
+                        input.form-control(type='text', name='last_name', id='c-last_name')
+                    div.form-group
+                        label(for='c-email') Correo electrónico
+                        input.form-control(type='text', name='email', id='c-email')
+                    div.form-group
+                        label(for='c-password') Crea una contraseña
+                        input.form-control(type='password', name='password', id='c-password')
+                        span.help-block 8 caracteres como mínimo, distingue mayúsculas de minúsculas
+                    div.form-group
+                        label(for='c-confirm_password') Vuelve a escribir la contraseña
+                        input.form-control(type='password', name='confirm_password', id='c-confirm_password')
+                    div
+                        button.btn.btn-primary(type='submit') Crear cuenta
