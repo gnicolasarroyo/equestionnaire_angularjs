@@ -7,6 +7,7 @@ html(lang='es-AR')
         title eQuestionnaire
         //- Styles
         //- =======================
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
         link(rel='stylesheet', href='/css/style.css')
         //- Libs
         //- =======================
@@ -14,6 +15,8 @@ html(lang='es-AR')
         script(type='text/javascript', src='/js/libs/angular-1.2.16/angular-route.min.js')
         script(type='text/javascript', src='/js/libs/angular-1.2.16/angular-resource.min.js')
         script(type='text/javascript', src='/js/libs/angular-1.2.16/angular-animate.min.js')
+        script(type='text/javascript', src='/js/libs/jquery-2.1.1.min.js')
+        script(type='text/javascript', src='/js/libs/bootstrap-3.0.3/bootstrap.min.js')
         //- App
         //- =======================
         script(type='text/javascript', src='/js/app/contact/__init__.js')
@@ -55,10 +58,54 @@ html(lang='es-AR')
         script(type='text/javascript', src='/js/app/survey/controllers/delete.js')
         script(type='text/javascript', src='/js/app/__main__.js')
     body
-        div
-            h1 eQuestionnaire 
-        div
-            |Welcome #{username} - 
-            a(href='/authentication/logout')
-                |logout
+        nav.navbar.navbar-default.navbar-static-top(role='navigation')
+            div.container
+                div.navbar-header
+                    a.navbar-brand(href='#') eQuestionnaire
+                div.collapse.navbar-collapse
+                    ul.nav.navbar-nav.navbar-left
+                        li.dropdown
+                            a.dropdown-toggle(href="#", data-toggle="dropdown") Encuestas
+                                b.caret
+                            ul.dropdown-menu
+                                li
+                                    a(href="#/questionnaires/") Ver cuestionarios
+                                li 
+                                    a(href="#/questionnaires/new/") Nuevo cuestionario
+                                li.divider
+                                li
+                                    a(href="#/surveys/") Ver encuestas
+                                li
+                                    a(href="#/surveys/new/") Nueva encuesta
+                        li.dropdown
+                            a.dropdown-toggle(href="#", data-toggle="dropdown") Contactos
+                                b.caret
+                            ul.dropdown-menu
+                                li
+                                    a(href="#/contacts/") Ver contactos
+                                li 
+                                    a(href="#/contacts/new/") Nuevo contacto
+                                li.divider
+                                li
+                                    a(href="#/contact-lists/") Ver listas de contactos
+                                li
+                                    a(href="#/contact-lists/new/") Nueva lista de contactos
+                    ul.nav.navbar-nav.navbar-right
+                        li.active
+                            a(href='#') Bienvenido 
+                                strong #{username}
+                        li.dropdown.active
+                            a.dropdown-toggle(href="#", data-toggle="dropdown")
+                                span.glyphicon.glyphicon-cog
+                                b.caret
+                            ul.dropdown-menu
+                                li
+                                    a(href="#/mail-account-settings/") Ver configuraciones de correo
+                                li 
+                                    a(href="#/mail-account-settings/new/") Nueva configuración de correo
+                                li.divider
+                                li
+                                    a(href="#") Mi cuenta
+                        li.active 
+                            a(href='/authentication/logout') Salir
         block content

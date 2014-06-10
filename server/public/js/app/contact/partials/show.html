@@ -1,24 +1,28 @@
-<div>
-	<h3>{{ title }}</h3>	
-</div>
-<div>
-	<div>
-		<p>Name <strong>{{ contact.name }}</strong></p>
-	</div>
-	<div>
-		<p>Email <strong>{{ contact.email }}</strong></p>
-	</div>
-	<div>
-		<p>Created <strong>{{ contact.created_at }}</strong></p>
-	</div>
-	<div>
-		<p>Last modified <strong>{{ contact.updated_at }}</strong></p>
-	</div>
-	<div>
-		<a href="{{ links.back_to_list }}">Back to list</a> 
-		- 
-		<a href="{{ links.base_url + contact._id + '/edit/' }}">Edit</a> 
-		- 
-		<a href="{{ links.base_url + contact._id + '/delete/' }}">Delete</a>
-	</div>
-</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<div>
+				<h3>{{ title }}</h3>	
+			</div>
+			<div>
+				<div>
+					<p>Name <strong>{{ contact.name }}</strong></p>
+				</div>
+				<div>
+					<p>Email <strong>{{ contact.email }}</strong></p>
+				</div>
+				<div>
+					<p>Created <strong>{{ contact.created_at | date: 'dd-MM-yyyy' }}</strong></p>
+				</div>
+				<div>
+					<p>Last modified <strong>{{ contact.updated_at | date: 'dd-MM-yyyy' }}</strong></p>
+				</div>
+				<div>
+					<a href="{{ links.back_to_list }}" class="btn btn-primary">Back to list</a>
+					<a href="{{ links.base_url + contact._id + '/edit/' }}" class="btn btn-link">Edit</a> 
+					<a href="{{ links.base_url + contact._id + '/delete/' }}" class="btn btn-link">Delete</a>
+				</div>
+			</div>
+		</div> <!-- end .col-md-6 -->
+	</div><!-- end .row -->
+</div><!-- end .container -->

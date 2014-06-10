@@ -1,24 +1,29 @@
-<div>
-	<h3>{{ title }}</h3>	
-</div>
-<div>
-	<form ng-submit='delete(contact)'>
-		<div>
-			<p>Name <strong>{{ contact.name }}</strong></p>
-		</div>
-		<div>
-			<p>Email <strong>{{ contact.email }}</strong></p>
-		</div>
-		<div>
-			<p>Created <strong>{{ contact.created_at }}</strong></p>
-		</div>
-		<div>
-			<p>Last modified <strong>{{ contact.updated_at }}</strong></p>
-		</div>
-		<div>
-			<input type="submit" value="Delete">
-			 - 
-			<a href="{{ links.back_to_list }}">Back to list</a>
-		</div>
-	</form>
-</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<div>
+				<h3>{{ title }}</h3>	
+			</div>
+			<div>
+				<form ng-submit='delete(contact)'>
+					<div>
+						<p>Name <strong>{{ contact.name }}</strong></p>
+					</div>
+					<div>
+						<p>Email <strong>{{ contact.email }}</strong></p>
+					</div>
+					<div>
+						<p>Created <strong>{{ contact.created_at | date: 'dd-MM-yyyy' }}</strong></p>
+					</div>
+					<div>
+						<p>Last modified <strong>{{ contact.updated_at | date: 'dd-MM-yyyy' }}</strong></p>
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary"> Delete </button>
+						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
+					</div>
+				</form>
+			</div>
+		</div> <!-- end .col-md-6 -->
+	</div><!-- end .row -->
+</div><!-- end .container -->

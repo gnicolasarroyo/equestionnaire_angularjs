@@ -1,20 +1,25 @@
-<div>
-	<h3>{{ title }}</h3>	
-</div>
-<div>
-	<form ng-submit='save(contact)'>
-		<div>
-			<label for="c-name">Name</label>
-			<input type="text" name="name" id="c-name" ng-model="contact.name">
-		</div>
-		<div>
-			<label for="c-email">Email</label>
-			<input type="email" name="email" id="c-email" ng-model="contact.email">
-		</div>
-		<div>
-			<input type="submit" value="Save">
-			 - 
-			<a href="{{ links.back_to_list }}">Back to list</a>
-		</div>
-	</form>
-</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<div>
+				<h3>{{ title }}</h3>	
+			</div>
+			<div>
+				<form ng-submit='save(contact)'>
+					<div class="form-group">
+						<label for="c-name">Name</label>
+						<input type="text" name="name" id="c-name" ng-model="contact.name" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="c-email">Email</label>
+						<input type="email" name="email" id="c-email" ng-model="contact.email" class="form-control">
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Save</button>
+						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
+					</div>
+				</form>
+			</div>
+		</div> <!-- end .col-md-6 -->
+	</div><!-- end .row -->
+</div><!-- end .container -->
