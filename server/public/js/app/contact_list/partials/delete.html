@@ -1,34 +1,33 @@
-<div>
-	<h3>{{ title }}</h3>	
-</div>
-<div>
-	<form ng-submit='delete(contact_list)'>
-		<div>
-			<p>Name <strong>{{ contact_list.name }}</strong></p>
-		</div>
-		<div>
-			<p>Contacts</p>
-			<table>
-				<tbody>
-					<tr ng-repeat="contact in contact_list.contacts | orderBy:'name'">
-						<td>
-							<div>{{ contact.name }}</div>
-							<div>{{ contact.email }}</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div>
-			<p>Created <strong>{{ contact_list.created_at }}</strong></p>
-		</div>
-		<div>
-			<p>Last modified <strong>{{ contact_list.updated_at }}</strong></p>
-		</div>
-		<div>
-			<input type="submit" value="Delete">
-			 - 
-			<a href="{{ links.back_to_list }}">Back to list</a>
-		</div>
-	</form>
-</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div>
+				<h3>{{ title }}</h3>	
+			</div>
+			<div>
+				<form ng-submit='delete(contact_list)'>
+					<div>
+						<p>Name <strong>{{ contact_list.name }}</strong></p>
+						<p>Contacts</p>
+						<table class="table table-condensed table-hover">
+							<tbody>
+								<tr ng-repeat="contact in contact_list.contacts | orderBy:'name'">
+									<td>
+										<div>{{ contact.name }}</div>
+										<div><small>{{ contact.email }}</small></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<p>Created <strong>{{ contact_list.created_at | date: 'dd-MM-yyyy' }}</strong></p>
+						<p>Last modified <strong>{{ contact_list.updated_at | date: 'dd-MM-yyyy' }}</strong></p>
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Delete</button>
+						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
+					</div>
+				</form>
+			</div>
+		</div> <!-- end .col-md-6 -->
+	</div><!-- end .row -->
+</div><!-- end .container -->
