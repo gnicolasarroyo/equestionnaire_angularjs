@@ -1,33 +1,26 @@
-<div>
-	<h3>{{ title }}</h3>	
-</div>
-<div>
-	<form ng-submit='delete(mail_account_setting)'>
-		<div>
-		<p>Name <strong>{{ mail_account_setting.name }}</strong></p>
-	</div>
-	<div>
-		<p>Host <strong>{{ mail_account_setting.host }}</strong></p>
-	</div>
-	<div>
-		<p>Port <strong>{{ mail_account_setting.port }}</strong></p>
-	</div>
-	<div>
-		<p>User name <strong>{{ mail_account_setting.username }}</strong></p>
-	</div>
-	<div>
-		<p>Password <strong>********</strong></p>
-	</div>
-	<div>
-		<p>Created <strong>{{ mail_account_setting.created_at }}</strong></p>
-	</div>
-	<div>
-		<p>Last modified <strong>{{ mail_account_setting.updated_at }}</strong></p>
-	</div>
-		<div>
-			<input type="submit" value="Delete">
-			 - 
-			<a href="{{ links.back_to_list }}">Back to list</a>
-		</div>
-	</form>
-</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div>
+				<h3>{{ title }}</h3>	
+			</div>
+			<div>
+				<form ng-submit='delete(mail_account_setting)'>
+					<div>
+						<p>Name <strong>{{ mail_account_setting.name }}</strong></p>
+						<p>Host <strong>{{ mail_account_setting.host }}</strong></p>
+						<p>Port <strong>{{ mail_account_setting.port }}</strong></p>
+						<p>User name <strong>{{ mail_account_setting.username }}</strong></p>
+						<p>Password <strong>********</strong></p>
+						<p>Created <strong>{{ mail_account_setting.created_at }}</strong></p>
+						<p>Last modified <strong>{{ mail_account_setting.updated_at }}</strong></p>
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Delete</button>
+						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
+					</div>
+				</form>
+			</div>
+		</div> <!-- end .col-md-6 -->
+	</div><!-- end .row -->
+</div><!-- end .container -->
