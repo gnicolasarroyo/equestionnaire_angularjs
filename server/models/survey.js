@@ -19,7 +19,7 @@ var surveyModel = {
 		surveySchema
 			.find({ user: user_id }, '_id start_date effective_days state title introduction questions mail_account_setting contacts contact_lists created_at updated_at')
 			.populate({path: 'mail_account_setting', select: '_id name'})
-			.populate({path: 'contacts', select: '_id name'})
+			.populate({path: 'contacts', select: '_id name email'})
 			.populate({path: 'contact_lists', select: '_id name contacts'})
 			.exec(function (err, surveys) {
 				fn(err, surveys);
@@ -32,7 +32,7 @@ var surveyModel = {
 		surveySchema
 			.findOne({ user: user_id, _id: survey_id }, '_id start_date effective_days state title introduction questions mail_account_setting contacts contact_lists created_at updated_at')
 			.populate({path: 'mail_account_setting', select: '_id name'})
-			.populate({path: 'contacts', select: '_id name'})
+			.populate({path: 'contacts', select: '_id name email'})
 			.populate({path: 'contact_lists', select: '_id name contacts'})
 			.exec(function (err, survey) {
 				fn(err, survey);

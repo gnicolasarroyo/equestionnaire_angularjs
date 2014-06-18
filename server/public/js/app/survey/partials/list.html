@@ -1,39 +1,45 @@
-<div>
-	<h3>{{ title }}</h3>
-	<a href="{{ links.new }}">New survey</a>
-</div>
-<div>
-	<table ng-show='list_on'>
-		<thead>
-			<tr>
-				<th>title</th>
-				<th>start date</th>
-				<th>effective days</th>
-				<th>state</th>
-				<th>questions</th>
-				<th>mail account setting</th>
-				<th>contacts</th>
-				<th>contact lists</th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat='survey in surveys'>
-				<td><a href="{{ links.base_url + survey._id + '/detail/' }}">{{ survey.title }}</a></td>
-				<td>{{ survey.start_date | date: 'yyyy-MM-dd' }}</td>
-				<td>{{ survey.effective_days }} days</td>
-				<td>{{ survey.state }}</td>
-				<td>{{ survey.questions.length }}</td>
-				<td>{{ survey.mail_account_setting.name }}</td>
-				<td>{{ survey.contacts.length }}</td>
-				<td>{{ survey.contact_lists.length }}</td>
-				<td><a href="{{ links.base_url + survey._id + '/edit/' }}">Edit</a></td>
-				<td><a href="{{ links.base_url + survey._id + '/delete/' }}">Delete</a></td>
-			</tr>
-		</tbody>
-	</table>
-	<p ng-hide='list_on'>
-		Surveys are not found, add a new menu from the "New survey".
-	</p>
-</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div>
+				<h3>{{ title }}</h3>
+				<a href="{{ links.new }}">New survey</a>
+			</div>
+			<div>
+				<table ng-show='list_on' class="table table-condensed table-hover">
+					<thead>
+						<tr>
+							<th>title</th>
+							<th>start date</th>
+							<th>effective days</th>
+							<th>state</th>
+							<th>questions</th>
+							<th>mail account setting</th>
+							<th>contacts</th>
+							<th>contact lists</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='survey in surveys'>
+							<td><a href="{{ links.base_url + survey._id + '/detail/' }}">{{ survey.title }}</a></td>
+							<td>{{ survey.start_date | date: 'yyyy-MM-dd' }}</td>
+							<td>{{ survey.effective_days }} days</td>
+							<td>{{ survey.state }}</td>
+							<td>{{ survey.questions.length }}</td>
+							<td>{{ survey.mail_account_setting.name }}</td>
+							<td>{{ survey.contacts.length }}</td>
+							<td>{{ survey.contact_lists.length }}</td>
+							<td><a href="{{ links.base_url + survey._id + '/edit/' }}">Edit</a></td>
+							<td><a href="{{ links.base_url + survey._id + '/delete/' }}">Delete</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<p ng-hide='list_on'>
+					Surveys are not found, add a new menu from the "New survey".
+				</p>
+			</div>
+		</div> <!-- end .col-md-6 -->
+	</div><!-- end .row -->
+</div><!-- end .container -->

@@ -3,6 +3,7 @@
 #  
 node_modules/
 *.log
+.bugs
 
 #
 # Exclude extra files in public folder
@@ -26,4 +27,3 @@ server/public/js/libs/angular-1.2.16/*
 !server/public/css/
 server/public/css/*
 !server/public/css/style.css
-

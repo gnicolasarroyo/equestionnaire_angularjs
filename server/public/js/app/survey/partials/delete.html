@@ -1,94 +1,99 @@
-<div>
-	<h3>{{ title }}</h3>	
-</div>
-<div>
-	<form ng-submit='delete(contact)'>
-		<div>
-			<p>Start date <strong>{{ survey.start_date | date: 'yyyy-MM-dd' }}</strong></p>
-		</div>
-		<div>
-			<p>Effective days <strong>{{ survey.effective_days }}</strong></p>
-		</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+			<div>
+				<h3>{{ title }}</h3>	
+			</div>
+			<div>
+				<form ng-submit='delete(contact)'>
+					<div>
+						<p>Start date <strong>{{ survey.start_date | date: 'yyyy-MM-dd' }}</strong></p>
+						<p>Effective days <strong>{{ survey.effective_days }}</strong></p>
+						<p>State
+							<strong ng-if="survey.state == 1">Newly created</strong>
+							<strong ng-if="survey.state == 2">Updated</strong>
+							<strong ng-if="survey.state == 3">Online</strong>
+							<strong ng-if="survey.state == 4">Finish</strong>
+						</p>
+						<p>Title <strong>{{ survey.title }}</strong></p>
+						<p>Introduction <strong>{{ survey.introduction }}</strong></p>
+					</div>
+					<div>
+						<div class="panel panel-default">
+							<div class="panel-heading">Questions</div>
+							<table class="table table-condensed table-hover">
+								<tbody>
+									<tr ng-repeat="question in survey.questions">
+										<td style="width:5%;">
+											<strong>{{ $index+1 }})</strong>
+										</td>
+										<td style="width:75%;">
+											<p>{{ question.query }}</p>
+											<ul>
+												<li ng-repeat="choice in question.choices">
+													{{ choice.value }}
+												</li>
+											</ul>
+										</td>
+										<td style="width:20%;" ng-if="question.question_type == 1">Text</td>
+										<td style="width:20%;" ng-if="question.question_type == 2">Option</td>
+										<td style="width:20%;" ng-if="question.question_type == 3">Multiple option</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 
-		<div>
-			<p>State
-				<strong ng-if="survey.state == 1">Newly created</strong>
-				<strong ng-if="survey.state == 2">Updated</strong>
-				<strong ng-if="survey.state == 3">Online</strong>
-				<strong ng-if="survey.state == 4">Finish</strong>
-			</p>
-		</div>
-
-		<div>
-			<p>Title <strong>{{ survey.title }}</strong></p>
-		</div>
-
-		<div>
-			<p>Introduction <strong>{{ survey.introduction }}</strong></p>
-		</div>
-
-		<div>
-			<h4>Questions</h4>
-			<table>
-				<tbody>
-					<tr ng-repeat="question in survey.questions">
-						<td>{{ question.query }}</td>
-						<td>{{ question.question_type }}</td>
-						<td>
-							<ol>
-								<li ng-repeat="choice in question.choices">
-									{{ choice.value }}
-								</li>
-							</ol>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<!-- Mail Account Settings
-		============================-->
-		<div>
-			<p>Mail account settings <strong>{{ survey.mail_account_setting.name }}</strong></p>
-		</div>
-		
-		<!-- Contacts & Contact List
-		============================-->
-		<div>
-			<h5>Contacts & Contact lists</h5>
-			<table>
-				<tbody>
-					<tr ng-repeat="contact in survey.contacts | orderBy:'name'">
-						<td>
-							<div>Contact</div>
-							<div>{{ contact.name }}</div>
-							<div>{{ contact.email }}</div>
-						</td>
-					</tr>
-					<tr ng-show="survey.contacts.length > 0 && survey.contact_lists.length > 0">
-						<td>----------</td>
-						<td>-------------------------</td>
-					</tr>
-					<tr ng-repeat="contact_list in survey.contact_lists | orderBy:'name'">
-						<td>
-							<div>Contact list</div>
-							<div>{{ contact_list.name }}</div>
-							<div>{{ contact_list.contacts.length }} contacts</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div>
-			<p>Created <strong>{{ survey.created_at | date: 'yyyy-MM-dd' }}</strong></p>
-		</div>
-		<div>
-			<p>Last modified <strong>{{ survey.updated_at | date: 'yyyy-MM-dd' }}</strong></p>
-		</div>
-		<div>
-			<input type="submit" value="Delete">
-			 - 
-			<a href="{{ links.back_to_list }}">Back to list</a>
-		</div>
-	</form>
-</div>
+					<!-- Mail Account Settings
+					============================-->
+					<div>
+						<p>Mail account settings <strong>{{ survey.mail_account_setting.name }}</strong></p>
+					</div>
+					
+					<!-- Contacts & Contact List
+					============================-->
+					<div class="row">
+						<div class="col-md-6">
+							<div class="panel panel-default">
+								<div class="panel-heading">Contacts & Contact lists</div>
+								<table class="table table-condensed table-hover">
+									<tbody>
+										<tr ng-repeat="contact in survey.contacts | orderBy:'name'">
+											<td>
+												<img src="/img/contact.32x32.png">
+											</td>
+											<td>
+												<div>{{ contact.name }}</div>
+												<div><small>{{ contact.email }}</small></div>
+											</td>
+										</tr>
+										<tr ng-show="survey.contacts.length > 0 && survey.contact_lists.length > 0" class="active">
+											<td colspan="2"></td>
+										</tr>
+										<tr ng-repeat="contact_list in survey.contact_lists | orderBy:'name'">
+											<td>
+												<img src="/img/contact-list.32x32.png">
+											</td>
+											<td>
+												<div>{{ contact_list.name }}</div>
+												<div><small>{{ contact_list.contacts.length }} contacts</small></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div>
+						<p>Created <strong>{{ survey.created_at | date: 'yyyy-MM-dd' }}</strong></p>
+						<p>Last modified <strong>{{ survey.updated_at | date: 'yyyy-MM-dd' }}</strong></p>
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">Delete</button>
+						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
+					</div>
+				</form>
+			</div>
+		</div> <!-- end .col-md-12 -->
+	</div><!-- end .row -->
+</div><!-- end .container -->
