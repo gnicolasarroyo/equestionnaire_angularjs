@@ -23,7 +23,12 @@ server/public/js/libs/angular-1.2.16/*
 !server/public/js/libs/angular-1.2.16/angular-animate.min.js
 !server/public/js/libs/jquery-1.11.1.min.js
 !server/public/js/libs/jquery.validate.min.js
+!server/public/js/libs/bootstrap-3.0.3/
+server/public/js/libs/bootstrap-3.0.3/*
+!server/public/js/libs/bootstrap-3.0.3/bootstrap.min.js
+
 ## CSS
 !server/public/css/
 server/public/css/*
+!server/public/css/bootstrap.min.css
 !server/public/css/style.css
