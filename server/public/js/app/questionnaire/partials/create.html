@@ -7,7 +7,7 @@
 			<div>
 				<!-- QUESTIONNAIRE FORM
 				=============================================-->
-				<form ng-submit='save(questionnaire)'>
+				<form ng-submit='save(questionnaire)' name="form" novalidate>
 					
 					<div class="row">
 						<div class="col-md-4">
@@ -15,14 +15,37 @@
 							=============================================-->
 							<div class="form-group">
 								<label for="c-title">Title</label>
-								<input type="text" name="title" id="c-title" ng-model="questionnaire.title" class="form-control">
+								<input 
+									type="text" 
+									name="title" 
+									id="c-title" 
+									ng-model="questionnaire.title" 
+									class="form-control"
+									ng-minlength="5"
+									maxlength="35"
+									required>
+								<div ng-show="form.title.$invalid" class="has-warning">
+									<p ng-show="form.title.$error.required" class="help-block">This field is required.</p>
+									<p ng-show="form.title.$error.minlength" class="help-block">This field min length required is 5 characters.</p>
+								</div>
 							</div>
 							
 							<!-- Purpose
 							=============================================-->
 							<div class="form-group">
 								<label for="c-purpose">Purpose</label>
-								<textarea name="purpose" id="c-purpose" ng-model="questionnaire.purpose" class="form-control"></textarea>
+								<textarea 
+									name="purpose" 
+									id="c-purpose" 
+									ng-model="questionnaire.purpose" 
+									class="form-control"
+									ng-minlength="5"
+									maxlength="250"
+									required></textarea>
+								<div ng-show="form.purpose.$invalid" class="has-warning">
+									<p ng-show="form.purpose.$error.required" class="help-block">This field is required.</p>
+									<p ng-show="form.purpose.$error.minlength" class="help-block">This field min length required is 5 characters and max length required is 250 characters.</p>
+								</div>
 							</div>
 						</div> <!-- end .col-md-4 -->
 					</div> <!-- end .row -->
@@ -32,6 +55,9 @@
 							<div class="page-header">
 								<h4>Add and edit questions</h4>
 							</div>
+							<div ng-hide="questionnaire.questions.length > 0 && questionnaire.questions.length < 10" class="has-warning">
+								<p class="help-block">This minimun is 1 and max is 10.</p>
+							</div>
 						</div>
 					</div>
 
@@ -40,13 +66,33 @@
 							<!-- QUESTION FORM
 							=============================================-->
 							<div class="panel panel-default">
-  								<div class="panel-body">
 									
+  								<div class="panel-body">
+
+  									<div ng-show="questionnaire.questions.length > 9" class="alert alert-warning">
+										<strong>Warning!</strong> You reached the limit of questions.
+									</div>
+									
+									<span ng-show="edit_question_index == null" class="label label-primary">New</span>
+									<span ng-show="edit_question_index != null" class="label label-success">Edit</span>
+
 									<!-- Query
 									=============================================-->
 									<div class="form-group">
 										<label for="c-query">Query</label>
-										<textarea name="query" id="c-query" ng-model="question.query" class="form-control"></textarea>
+										<textarea 
+											name="query" 
+											id="c-query" 
+											ng-model="question.query" 
+											class="form-control"
+											rows="5" 
+											maxlength="250"></textarea>
+										<div class="has-warning">
+											<p ng-show="!question.query" class="help-block">This field is required.</p>
+										</div>
+										<div class="has-info">
+											<p ng-show="question.query" class="help-block">{{ 250 - question.query.length }}</p>
+										</div>
 									</div>
 
 									<!-- Type
@@ -54,33 +100,68 @@
 									<div class="form-group">
 										<p><strong>Type</strong></p>
 										<label for="c-question_type_text" class="radio-inline">
-											<input type="radio" name="question_type" id="c-question_type_text" ng-model="question.question_type" value="1">Text
+											<input 
+												type="radio" 
+												name="question_type" 
+												id="c-question_type_text" 
+												ng-model="question.question_type" 
+												value="1">Text
 										</label>
 										<label for="c-question_type_option" class="radio-inline">
-											<input type="radio" name="question_type" id="c-question_type_option" ng-model="question.question_type" value="2">Option
+											<input 
+												type="radio" 
+												name="question_type" 
+												id="c-question_type_option" 
+												ng-model="question.question_type" 
+												value="2">Option
 										</label>
 										<label for="c-question_type_multipleoption" class="radio-inline">
-											<input type="radio" name="question_type" id="c-question_type_multipleoption" ng-model="question.question_type" value="3">Multiple option
+											<input 
+												type="radio" 
+												name="question_type" 
+												id="c-question_type_multipleoption" 
+												ng-model="question.question_type" 
+												value="3">Multiple option
 										</label>
+										<div ng-show="!question.question_type" class="has-warning">
+											<p class="help-block">This field is required.</p>
+										</div>
 									</div>
 									
 									<div ng-if="question.question_type != 1">
 										<!-- CHOICE FORM
 										=============================================-->	
-										<p>Add choice</p>
-										
+										<br>
+										<h4>Add choice</h4>
+										<hr>
+										<div ng-hide="question.choices.length > 1 && question.choices.length < 10" class="has-warning">
+											<p class="help-block">This minimun 2 options and maximun is 10.</p>
+										</div>
+										<div ng-show="question.choices.length > 9" class="alert alert-warning">
+											<strong>Warning!</strong> You reached the limit of options.
+										</div>
 										<!-- Value
 										=============================================-->
 										<div class="form-group">
 											<div class="row">
 											  	<div class="col-lg-12">
 											    	<div class="input-group">
-											      		<input type="text" name="value" id="c-value" ng-model="choice.value" class="form-control">
+											      		<input 
+											      			type="text" 
+											      			name="value" 
+											      			id="c-value" 
+											      			ng-model="choice.value" 
+											      			class="form-control"
+											      			maxlength="30">
 											      		
 											      		<!-- CHOICE ACTIONS FORM
 														=============================================-->
 											      		<span class="input-group-btn">
-											        		<button type="button" ng-click="saveChoice(choice)" class="btn btn-primary">Save choice</button>
+											        		<button 
+											        			ng-disabled="!choice.value || question.choices.length > 9" 
+											        			type="button" 
+											        			ng-click="saveChoice(choice)" 
+											        			class="btn btn-primary">Save choice</button>
 											      		</span>
 											    	</div><!-- /input-group -->
 											  	</div><!-- /.col-lg-6 -->	
@@ -91,7 +172,10 @@
 										=============================================-->
 										<div class="form-group">
 											<div class="panel panel-default">
-											  	<div class="panel-heading">Choices</div>
+											  	<div class="panel-heading">Choices <span class="badge">{{ question.choices.length }}</span></div>
+											  	<div ng-show="question.choices.length < 1" class="panel-body">
+													<p>Have not yet entered options. To add a new option using the form at the top of the list.</p>
+												</div>
 											  	<table class="table table-condensed table-hover">
 													<tbody>
 														<tr ng-repeat="choice in question.choices">
@@ -111,7 +195,11 @@
 									<!-- QUESTION ACTIONS FORM
 									=============================================-->
 									<div class="form-group">
-										<button type="button" ng-click="saveQuestion(question)" class="btn btn-primary">Save question</button>
+										<button 
+											ng-disabled="!question.query || !question.question_type || (question.question_type != 1 && question.choices.length < 2) || (edit_question_index == null && questionnaire.questions.length > 9)"
+											type="button" 
+											ng-click="saveQuestion(question)" 
+											class="btn btn-primary">Save question</button>
 										<button type="button" ng-click="resetQuestion()" class="btn btn-link">Reset</button>
 									</div>
 								</div><!-- end panel-body -->
@@ -122,7 +210,10 @@
 							<!-- QUESTION LIST
 							=============================================-->
 							<div class="panel panel-default">
-								<div class="panel-heading">Questions</div>
+								<div class="panel-heading">Questions <span class="badge">{{ questionnaire.questions.length }}</span></div>
+								<div ng-show="questionnaire.questions.length < 1" class="panel-body">
+									<p>Have not yet entered questions. To add a new question, use the form on the left.</p>
+								</div>
 								<table class="table table-hover">
 									<tbody>
 										<tr ng-repeat="question in questionnaire.questions">
@@ -164,7 +255,10 @@
 					<!-- QUESTIONNAIRE ACTIONS FORM
 					=============================================-->
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary">Save</button>
+						<button 
+							ng-disabled="form.$invalid || questionnaire.questions < 1 || questionnaire.questions.length > 10" 
+							type="submit" 
+							class="btn btn-primary">Save</button>
 						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
 					</div>
 				</form>

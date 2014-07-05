@@ -9,27 +9,49 @@ angular.module('equestionnaire.contactlist')
 		function initialize () {
 			$scope.title = 'Update contact list';
 			$scope.links = { back_to_list: '#/contact-lists/' };
+			$scope.available_list_on = false;
 
-			ContactResource.query(function (contacts) {
-				$scope.avaible_list = contacts;
+			/* onSuccess */			
+			function onSuccess (data) {
 
-				ContactListResource.get({ contact_list_id: $routeParams.contact_list_id }, function (contact_list) {
-					$scope.contact_list = contact_list;
+				$scope.available_list_on = data.length > 0 ? true : false;
 
-					var temp_contacts = $scope.contact_list.contacts;
+				$scope.available_list = data;
+
+				/* onSuccess */
+				function onSuccess (data) {
+					var temp_contacts;
+
+					$scope.contact_list = data;
+					temp_contacts = $scope.contact_list.contacts;
 					$scope.contact_list.contacts = [];
 
-					for (var i = $scope.avaible_list.length - 1; i >= 0; i--) {
+					for (var i = $scope.available_list.length - 1; i >= 0; i--) {
 					 	for (var j = temp_contacts.length - 1; j >= 0; j--) {
-					 		if (temp_contacts[j]._id === $scope.avaible_list[i]._id) {
-								swap($scope.avaible_list[i], $scope.avaible_list, $scope.contact_list.contacts);
+					 		if (temp_contacts[j]._id === $scope.available_list[i]._id) {
+								swap($scope.available_list[i], $scope.available_list, $scope.contact_list.contacts);
 								break;		 			
 					 		}
 					 	};
 					};
-				});
-			});
-			
+				}
+
+				/* onError */
+				function onError (data) {
+					console.log(data);
+				}
+
+				/* get Contact List */
+				ContactListResource.get({ contact_list_id: $routeParams.contact_list_id }, onSuccess, onError);
+			}
+
+			/* onError */
+			function onError (data) {
+				console.log(data);
+			}
+
+			/* get Contacts */
+			ContactResource.query(onSuccess, onError);
 		}
 		
 		function swap (item, from, to) {
@@ -38,11 +60,11 @@ angular.module('equestionnaire.contactlist')
 		}
 
 		$scope.avaibleCheck = function (item) {
-			swap(item, $scope.avaible_list, $scope.contact_list.contacts);
+			swap(item, $scope.available_list, $scope.contact_list.contacts);
 		};
 
 		$scope.selectedCheck = function (item) {
-			swap(item, $scope.contact_list.contacts, $scope.avaible_list);
+			swap(item, $scope.contact_list.contacts, $scope.available_list);
 		};
 
 

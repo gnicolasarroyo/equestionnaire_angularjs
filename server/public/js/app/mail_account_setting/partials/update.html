@@ -5,33 +5,120 @@
 				<h3>{{ title }}</h3>	
 			</div>
 			<div>
-				<form ng-submit='save(mail_account_setting)'>
+				<form ng-submit="save(mail_account_setting)" name="form" novalidate>
+					<!-- Name
+					==================================-->
 					<div class="form-group">
 						<label for="c-name">Name</label>
-						<input type="text" name="name" id="c-name" ng-model="mail_account_setting.name" class="form-control">
+						<input 
+							type="text" 
+							name="name" 
+							id="c-name" 
+							ng-model="mail_account_setting.name" 
+							class="form-control"
+							ng-minlength="5"
+							maxlength="35"
+							required>
+						<div ng-show="form.name.$invalid" class="has-warning">
+							<p ng-show="form.name.$error.required" class="help-block">This field is required.</p>
+							<p ng-show="form.name.$error.minlength" class="help-block">This field min length required is 5 characters.</p>
+						</div>
 					</div>
+					<!-- Host
+					==================================-->
 					<div class="form-group">
 						<label for="c-host">Host</label>
-						<input type="text" name="host" id="c-host" ng-model="mail_account_setting.host" class="form-control">
+						<input 
+							type="text" 
+							name="host" 
+							id="c-host" 
+							ng-model="mail_account_setting.host" 
+							class="form-control"
+							ng-minlength="5"
+							maxlength="45"
+							required>
+						<div ng-show="form.host.$invalid" class="has-warning">
+							<p ng-show="form.host.$error.required" class="help-block">This field is required.</p>
+							<p ng-show="form.host.$error.minlength" class="help-block">This field min length required is 5 characters.</p>
+						</div>
 					</div>
+					<!-- Port
+					==================================-->
 					<div class="form-group">
 						<label for="c-port">Port</label>
-						<input type="number" name="port" id="c-port" ng-model="mail_account_setting.port" class="form-control">
+						<input 
+							type="number" 
+							name="port" 
+							id="c-port" 
+							ng-model="mail_account_setting.port" 
+							class="form-control"
+							min="0"
+							max="65535"
+							required>
+						<div ng-show="form.port.$invalid" class="has-warning">
+							<p ng-show="form.port.$error.required" class="help-block">This field is required.</p>
+							<p ng-show="form.port.$error.number" class="help-block">This is not a valid port.</p> <!--not found validation type number -->
+							<p ng-show="form.port.$error.min || form.port.$error.max" class="help-block">This field min required is 0 and max required is 65535.</p>
+						</div>
 					</div>
+					<!-- User name
+					==================================-->
 					<div class="form-group">
 						<label for="c-username">User name</label>
-						<input type="email" name="username" id="c-username" ng-model="mail_account_setting.username" class="form-control">
+						<input 
+							type="email" 
+							name="username" 
+							id="c-username" 
+							ng-model="mail_account_setting.username" 
+							class="form-control"
+							ng-minlength="5"
+							maxlength="45"
+							required>
+						<div ng-show="form.username.$invalid" class="has-warning">
+							<p ng-show="form.username.$error.required" class="help-block">This field is required.</p>
+							<p ng-show="form.username.$error.minlength" class="help-block">This field min length required is 5 characters.</p>
+						</div>
+						<div ng-show="form.username.$dirty" class="has-error">
+							<p ng-show="form.username.$error.email" class="help-block">This is not a valid user name.</p>
+						</div>
 					</div>
+					<!-- Password
+					==================================-->
 					<div class="form-group">
 						<label for="c-password">Password</label>
-						<input type="password" name="password" id="c-password" ng-model="mail_account_setting.password" class="form-control">
+						<input 
+							type="password" 
+							name="password" 
+							id="c-password" 
+							ng-model="mail_account_setting.password" 
+							class="form-control"
+							maxlength="20"
+							required>
+						<div ng-show="form.password.$invalid" class="has-warning">
+							<p ng-show="form.password.$error.required" class="help-block">This field is required.</p>
+						</div>
 					</div>
+					<!-- Confirm password
+					==================================-->
 					<div class="form-group">
 						<label for="c-confirm-password">Confirm password</label>
-						<input type="password" name="confirm_password" id="c-confirm-password" ng-model="mail_account_setting.confirm_password" class="form-control">
+						<input 
+							type="password" 
+							name="confirm_password" 
+							id="c-confirm-password" 
+							ng-model="confirm_password" 
+							class="form-control"
+							maxlength="20"
+							required>
+						<div ng-show="form.confirm_password.$invalid" class="has-warning">
+							<p ng-show="form.confirm_password.$error.required" class="help-block">This field is required.</p>
+						</div>
+						<div ng-show="mail_account_setting.password !== confirm_password && !form.confirm_password.$invalid" class="has-error">
+							<p class="help-block">The password entered does not match the previously entered.</p>
+						</div>
 					</div>
-					<div>
-						<button type="submit" class="btn btn-primary">Save</button>
+					<div class="form-group">
+						<button ng-disabled="form.$invalid || mail_account_setting.password !== confirm_password" type="submit" class="btn btn-primary">Save</button>
 						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
 					</div>
 				</form>

@@ -5,63 +5,122 @@
 				<h3>{{ title }}</h3>	
 			</div>
 			<div>
-				<form ng-submit='save(contact_list)'>
+				<form name="form" ng-submit='save(contact_list)' novalidate>
 					<div class="row">
 						<div class="col-md-4">
 							<div class="form-group">
 								<label for="c-name">Name</label>
-								<input type="text" name="name" id="c-name" ng-model="contact_list.name" class="form-control">
+								<input 	type="text" 
+										name="name" 
+										id="c-name" 
+										ng-model="contact_list.name" 
+										class="form-control"
+										ng-minlength="5"
+										maxlength="35"
+										required>
+								<div ng-show="form.name.$invalid" class="has-warning">
+									<p ng-show="form.name.$error.required" class="help-block">This field is required.</p>
+									<p ng-show="form.name.$error.minlength" class="help-block">This field min length required is 5 characters.</p>
+								</div>
 							</div>
-						</div>
-					</div>
+						</div> <!-- end .col-md-4 -->
+					</div> <!-- end .row -->
+
 					<div class="row">
-						<!-- Contacts Available 
-						====================================-->
-						<div class="col-md-4">
-							<h4>Contacts Available</h4>
-							<div class="form-group">
-								<label for="c-avaibleFilter">Filter</label>
-								<input type="text" name="avaibleFilter" id="c-avaibleFilter" ng-model="avaible_filter" class="form-control">
+						<div class="col-md-12">
+							<!-- Contacts & Contact List
+							============================-->
+							<div class="page-header">
+								<h4>Add or remove contacts</h4>
 							</div>
-							<table class="table table-condensed table-hover">
-								<tbody>
-									<tr ng-repeat="contact in avaible_list | filter:avaible_filter | orderBy:'name'">
-										<td>
-											<div>{{ contact.name }}</div>
-											<div><small>{{ contact.email }}</small></div>
-										</td>
-										<td>
-											<button type="button" ng-click="avaibleCheck(contact)" class="btn btn-primary">add</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<!-- Contacts Selected 
-						====================================-->
-						<div class="col-md-4">
-							<h4>Contacts Selected</h4>
-							<div class="form-group">
-								<label for="c-selectedFilter">Filter</label>
-								<input type="text" name="selectedFilter" id="c-selectedFilter" ng-model="selected_filter" class="form-control">
+							<div 
+								ng-hide="contact_list.contacts.length > 0 || !contact_list.contacts.length > 300 || !available_list_on" 
+								class="has-warning">
+								<p class="help-block">This minimun is one and max is 300.</p>
 							</div>
-							<table class="table table-condensed table-hover">
-								<tbody>
-									<tr ng-repeat="contact in contact_list.contacts | filter:selected_filter | orderBy:'name'">
-										<td>
-											<div>{{ contact.name }}</div>
-											<div><small>{{ contact.email }}</small></div>
-										</td>
-										<td>
-											<button type="button" ng-click="selectedCheck(contact)" class="btn btn-primary">remove</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
 						</div>
 					</div>
+
+					<div class="row">
+						<!-- hide if available_list_on -->
+						<div ng-hide="available_list_on" class="col-md-12">
+							<div class="alert alert-warning">
+							  	<strong>Warning!</strong> No contacts found, you need contacts to build your contact list. Turn to the menu Contact > New contact.
+							</div>
+						</div>
+						
+						<!-- show if available_list_on -->
+						<div ng-show="available_list_on" class="col-md-5">
+							<!-- Available list
+							====================================-->
+							<div ng-show="available_list_on" class="panel panel-default">
+							  	<div class="panel-heading">Available <span class="badge">{{ available_list.length }}</span></div>
+							  	
+							  	<div class="panel-body">
+									<div class="form-group">
+										<label for="c-avaibleFilter">Filter</label>
+										<input type="text" name="avaibleFilter" id="c-avaibleFilter" ng-model="avaible_filter" class="form-control">
+									</div>    	
+							  	</div>
+								
+								<div style="height: 200px;overflow-y: auto;">
+									<table class="table table-condensed table-hover">
+										<tbody>
+											<tr ng-repeat="contact in available_list | filter:avaible_filter | orderBy:'name'">
+												<td>
+													<img src="/img/contact.32x32.png">
+												</td>
+												<td>
+													<div>{{ contact.name }}</div>
+													<div><small>{{ contact.email }}</small></div>
+												</td>
+												<td>
+													<button type="button" ng-click="avaibleCheck(contact)" class="btn btn-primary">add</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div> <!-- end .panel.panel-default -->
+						</div> <!-- end .col-md-5 -->
+						
+						<div ng-show="available_list_on" class="col-md-5">
+							<!-- Selected list
+							====================================-->
+							<div class="panel panel-default">
+							  	<div class="panel-heading">Selected <span class="badge">{{ contact_list.contacts.length }}</span></div>
+
+							  	<div class="panel-body">
+							    	<div class="form-group">
+										<label for="c-selectedFilter">Filter</label>
+										<input type="text" name="selectedFilter" id="c-selectedFilter" ng-model="selected_filter" class="form-control">
+									</div>
+							  	</div>
+
+							  	<div style="height: 200px;overflow-y: auto;">
+							  		<table class="table table-condensed table-hover">
+										<tbody>
+											<tr ng-repeat="contact in contact_list.contacts | filter:selected_filter | orderBy:'name'">
+												<td>
+													<img src="/img/contact.32x32.png">
+												</td>
+												<td>
+													<div>{{ contact.name }}</div>
+													<div><small>{{ contact.email }}</small></div>
+												</td>
+												<td>
+													<button type="button" ng-click="selectedCheck(contact)" class="btn btn-primary">remove</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+							  	</div>
+							</div> <!-- end .panel.panel-default -->
+						</div> <!-- end .col-md-5 -->
+					</div> <!-- end .row -->
+
 					<div>
-						<button type="submit" class="btn btn-primary">Save</button>
+						<button ng-disabled="form.$invalid || !contact_list.contacts.length > 0 || contact_list.contacts.length > 300 || !available_list_on" type="submit" class="btn btn-primary">Save</button>
 						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
 					</div>
 				</form>

@@ -29,7 +29,7 @@ angular.module('equestionnaire.survey')
 				contact_lists: 			[]
 			};
 
-			
+	
 			/* get Questionnaires */
 
 			questionnaires = {
@@ -62,6 +62,7 @@ angular.module('equestionnaire.survey')
 
 			contacts = {
 				onSuccess: function (data) {
+					$scope.available_list_on = data.length > 0 ? true : false;
 					$scope.contacts = data;
 				},	
 				onError: function (data) {
@@ -85,7 +86,7 @@ angular.module('equestionnaire.survey')
 			
 			ContactListResource.query(contact_lists.onSuccess, contact_lists.onError);
 		}
-		
+
 
 		function swap (item, from, to) {
 			to.push(item);

@@ -20,6 +20,32 @@ var schema = new mongoose.Schema({
 	updated_at: 	{ type: Date, default: Date.now() }
 });
 
+/**
+ * Validations
+ */
+schema.path('title').validate(function(title) {
+    return (typeof title === 'string'); 
+}, 'Invalid type Title');
+
+schema.path('title').validate(function(title) {
+    return (title.length > 4 && title.length < 36);
+}, 'Invalid length Title');
+
+schema.path('purpose').validate(function(purpose) {
+    return (typeof purpose === 'string'); 
+}, 'Invalid type Purpose');
+
+schema.path('purpose').validate(function(purpose) {
+    return (purpose.length > 4 && purpose.length < 251);
+}, 'Invalid length Purpose');
+
+schema.path('questions').validate(function(questions) {
+    return (typeof questions === 'object'); 
+}, 'Invalid type Questions');
+
+schema.path('questions').validate(function(questions) {
+    return (questions.length > 0 && questions.length < 11);
+}, 'Invalid lengte Questions');
 
 exports.schema = function () {
 	return schema;

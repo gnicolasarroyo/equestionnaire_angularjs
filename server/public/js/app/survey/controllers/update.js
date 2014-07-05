@@ -65,6 +65,7 @@ angular.module('equestionnaire.survey')
 							};
 						};
 
+						$scope.available_list_on = data.length > 0 ? true : false;
 						$scope.contacts = data;
 					},	
 					onError: function (data) {

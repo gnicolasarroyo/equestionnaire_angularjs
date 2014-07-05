@@ -10,15 +10,25 @@ angular.module('equestionnaire.contactlist')
 		function initialize () {
 			$scope.title = 'Create contact list';
 			$scope.links = { back_to_list: '#/contact-lists/' };
-
-			ContactResource.query(function (contacts) {
-				$scope.avaible_list = contacts;
-			});
+			$scope.available_list_on = false;
 
 			$scope.contact_list = {
 				name: '',
 				contacts: []
 			};
+
+			/* onSuccess */
+			function onSuccess (data) {
+				$scope.available_list_on = data.length > 0 ? true : false;
+				$scope.available_list = data;
+			}
+
+			/* onError */
+			function onError (data) {
+				console.log(data);
+			}
+
+			ContactResource.query(onSuccess, onError);
 		}
 		
 		function swap (item, from, to) {
@@ -27,11 +37,11 @@ angular.module('equestionnaire.contactlist')
 		}
 
 		$scope.avaibleCheck = function (item) {
-			swap(item, $scope.avaible_list, $scope.contact_list.contacts);
+			swap(item, $scope.available_list, $scope.contact_list.contacts);
 		};
 
 		$scope.selectedCheck = function (item) {
-			swap(item, $scope.contact_list.contacts, $scope.avaible_list);
+			swap(item, $scope.contact_list.contacts, $scope.available_list);
 		};
 
 

@@ -1,27 +1,40 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-4">
 			<div>
 				<h3>{{ title }}</h3>	
 			</div>
 			<div>
 				<div>
 					<p>Name <strong>{{ contact_list.name }}</strong></p>
-					<p>Contacts</p>
-					<div class="form-group">
-						<label for="c-filter">Filter</label>
-						<input type="text" name="filter" id="c-filter" ng-model="filter" class="form-control">
-					</div>
-					<table class="table table-condensed table-hover">
-						<tbody>
-							<tr ng-repeat="contact in contact_list.contacts | filter:filter | orderBy:'name'">
-								<td>
-									<div>{{ contact.name }}</div>
-									<div><small>{{ contact.email }}</small></div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				</div>
+				<div>	
+					<div class="panel panel-default">
+						<div class="panel-heading">Contacts</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label for="c-filter">Filter</label>
+								<input type="text" name="filter" id="c-filter" ng-model="filter" class="form-control">
+							</div>
+						</div>
+						<div style="height: 200px;overflow-y: auto;">
+							<table class="table table-condensed table-hover">
+								<tbody>
+									<tr ng-repeat="contact in contact_list.contacts | filter:filter | orderBy:'name'">
+										<td>
+											<img src="/img/contact.32x32.png">
+										</td>
+										<td>
+											<div>{{ contact.name }}</div>
+											<div><small>{{ contact.email }}</small></div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div> <!-- end .panel.panel-default -->
+				</div>
+				<div>
 					<p>Created <strong>{{ contact_list.created_at | date: 'dd-MM-yyyy' }}</strong></p>
 					<p>Last modified <strong>{{ contact_list.updated_at | date: 'dd-MM-yyyy' }}</strong></p>
 				</div>

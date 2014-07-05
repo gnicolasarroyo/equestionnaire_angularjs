@@ -5,35 +5,84 @@
 				<h3>{{ title }}</h3>	
 			</div>
 			<div>
-				<form ng-submit='save(survey)'>
+				<form ng-submit="save(survey)" name="form" novalidate>
 					<div class="row">
 						<div class="col-md-4">
 							<!-- Start date
 							============================-->
 							<div class="form-group">
 								<label for="c-start-date">Start date</label>
-								<input type="date" name="start_date" id="c-start-date" ng-model="survey.start_date" value="{{ survey.start_date | date: 'yyyy-MM-dd' }}">
+								<p class="form-control-static">{{ survey.start_date | date: 'dd/MM/yyyy' }}</p>
 							</div>
 
 							<!-- Effective days
 							============================-->
 							<div class="form-group">
 								<label for="c-effective-days">Effective days</label>
-								<input type="number" name="effective_days" id="c-effective-days" ng-model="survey.effective_days" min="1" max="30" class="form-control">
+								<input 
+									type="number" 
+									name="effective_days" 
+									id="c-effective-days" 
+									ng-model="survey.effective_days"
+									min="1" 
+									max="30" 
+									class="form-control"
+									required>
+								<div ng-show="form.effective_days.$invalid" class="has-warning">
+									<p ng-show="form.effective_days.$error.required" class="help-block">This field is required.</p>
+									<p ng-show="form.effective_days.$error.number" class="help-block">This is not a valid effective days.</p> <!--not found validation type number -->
+									<p ng-show="form.effective_days.$error.min || form.effective_days.$error.max" class="help-block">This field min required is 1 and max required is 30.</p>
+								</div>
 							</div>
 
 							<!-- Title
 							============================-->
 							<div class="form-group">
 								<label for="c-title">Title</label>
-								<input type="text" name="title" id="c-title" ng-model="survey.title" class="form-control">
+								<input 
+									type="text" 
+									name="title" 
+									id="c-title" 
+									ng-model="survey.title" 
+									class="form-control"
+									ng-minlength="5"
+									maxlength="35"
+									required>
+								<div ng-show="form.title.$invalid" class="has-warning">
+									<p ng-show="form.title.$error.required" class="help-block">This field is required.</p>
+									<p ng-show="form.title.$error.minlength" class="help-block">This field min length required is 5 characters.</p>
+								</div>
 							</div>
 
 							<!-- Introduction text
 							============================-->
 							<div class="form-group">
 								<label for="c-introduction">Introduction text</label>
-								<textarea name="introduction" id="c-introduction" ng-model="survey.introduction" class="form-control"></textarea>
+								<textarea 
+									name="introduction" 
+									id="c-introduction" 
+									ng-model="survey.introduction" 
+									class="form-control"
+									ng-minlength="5"
+									maxlength="250"
+									required></textarea>
+								<div ng-show="form.introduction.$invalid" class="has-warning">
+									<p ng-show="form.introduction.$error.required" class="help-block">This field is required.</p>
+									<p ng-show="form.introduction.$error.minlength" class="help-block">This field min length required is 5 characters and max length required is 250 characters.</p>
+								</div>
+							</div>
+
+							<!-- Mail Account Settings
+							============================-->
+							<div ng-hide="mail_account_settings.length > 0">
+								<h5>Mail Account Setting</h5>
+								<p>No mail account settings were found, you need to <strong>create a mail account setting</strong> to submit your survey.</p>
+							</div>
+							<div ng-show="mail_account_settings.length > 0" class="form-group">
+								<label for="c-mail-account-setting">Mail Account Setting</label>
+								<select ng-model="survey.mail_account_setting" class="form-control">
+									<option ng-repeat="mail_account_setting in mail_account_settings" value="{{ mail_account_setting._id }}">{{ mail_account_setting.name }}</option>	
+								</select>
 							</div>
 						</div><!-- end .col-md-4 -->
 					</div><!-- end .row -->
@@ -43,67 +92,129 @@
 							<div class="page-header">
 								<h4>Add and edit questions</h4>
 							</div>
+							<div ng-hide="survey.questions.length > 0 && survey.questions.length < 10" class="has-warning">
+								<p class="help-block">This minimun is 1 and max is 10.</p>
+							</div>
 						</div>
 					</div>
 
 					<div class="row">
-						<!-- Question FORM
-						============================-->
 						<div class="col-md-4">
+							<!-- QUESTION FORM
+							=============================================-->
 							<div class="panel panel-default">
+									
   								<div class="panel-body">
-  									<!-- Query
-									============================-->
-  									<div class="form-group">
+
+  									<div ng-show="survey.questions.length > 9" class="alert alert-warning">
+										<strong>Warning!</strong> You reached the limit of questions.
+									</div>
+									
+									<span ng-show="edit_question_index == null" class="label label-primary">New</span>
+									<span ng-show="edit_question_index != null" class="label label-success">Edit</span>
+
+									<!-- Query
+									=============================================-->
+									<div class="form-group">
 										<label for="c-query">Query</label>
-										<textarea name="query" id="c-query" ng-model="question.query" class="form-control"></textarea>
+										<textarea 
+											name="query" 
+											id="c-query" 
+											ng-model="question.query" 
+											class="form-control"
+											rows="5" 
+											maxlength="250"></textarea>
+										<div class="has-warning">
+											<p ng-show="!question.query" class="help-block">This field is required.</p>
+										</div>
+										<div class="has-info">
+											<p ng-show="question.query" class="help-block">{{ 250 - question.query.length }}</p>
+										</div>
 									</div>
 
 									<!-- Type
-									============================-->
+									=============================================-->
 									<div class="form-group">
 										<p><strong>Type</strong></p>
 										<label for="c-question_type_text" class="radio-inline">
-											<input type="radio" name="question_type" id="c-question_type_text" ng-model="question.question_type" value="1">Text
+											<input 
+												type="radio" 
+												name="question_type" 
+												id="c-question_type_text" 
+												ng-model="question.question_type" 
+												value="1">Text
 										</label>
 										<label for="c-question_type_option" class="radio-inline">
-											<input type="radio" name="question_type" id="c-question_type_option" ng-model="question.question_type" value="2">Option
+											<input 
+												type="radio" 
+												name="question_type" 
+												id="c-question_type_option" 
+												ng-model="question.question_type" 
+												value="2">Option
 										</label>
 										<label for="c-question_type_multipleoption" class="radio-inline">
-											<input type="radio" name="question_type" id="c-question_type_multipleoption" ng-model="question.question_type" value="3">Multiple option
+											<input 
+												type="radio" 
+												name="question_type" 
+												id="c-question_type_multipleoption" 
+												ng-model="question.question_type" 
+												value="3">Multiple option
 										</label>
+										<div ng-show="!question.question_type" class="has-warning">
+											<p class="help-block">This field is required.</p>
+										</div>
 									</div>
-
-									<!-- Choice FORM
-									============================-->
+									
 									<div ng-if="question.question_type != 1">
-										<p>Add choice</p>
-
+										<!-- CHOICE FORM
+										=============================================-->	
+										<br>
+										<h4>Add choice</h4>
+										<hr>
+										<div ng-hide="question.choices.length > 1 && question.choices.length < 10" class="has-warning">
+											<p class="help-block">This minimun 2 options and maximun is 10.</p>
+										</div>
+										<div ng-show="question.choices.length > 9" class="alert alert-warning">
+											<strong>Warning!</strong> You reached the limit of options.
+										</div>
 										<!-- Value
-										============================-->
+										=============================================-->
 										<div class="form-group">
 											<div class="row">
 											  	<div class="col-lg-12">
 											    	<div class="input-group">
-											      		<input type="text" name="value" id="c-value" ng-model="choice.value" class="form-control">
+											      		<input 
+											      			type="text" 
+											      			name="value" 
+											      			id="c-value" 
+											      			ng-model="choice.value" 
+											      			class="form-control"
+											      			maxlength="30">
 											      		
 											      		<!-- CHOICE ACTIONS FORM
 														=============================================-->
 											      		<span class="input-group-btn">
-											        		<button type="button" ng-click="saveChoice(choice)" class="btn btn-primary">Save choice</button>
+											        		<button 
+											        			ng-disabled="!choice.value || question.choices.length > 9" 
+											        			type="button" 
+											        			ng-click="saveChoice(choice)" 
+											        			class="btn btn-primary">Save choice</button>
 											      		</span>
 											    	</div><!-- /input-group -->
 											  	</div><!-- /.col-lg-6 -->	
 											</div>
 										</div>
-
-										<!-- Choice LIST
+										
+										<!-- CHOICE LIST
 										=============================================-->
 										<div class="form-group">
 											<div class="panel panel-default">
-											  	<div class="panel-heading">Choices</div>
+											  	<div class="panel-heading">Choices <span class="badge">{{ question.choices.length }}</span></div>
+											  	<div ng-show="question.choices.length < 1" class="panel-body">
+													<p>Have not yet entered options. To add a new option using the form at the top of the list.</p>
+												</div>
 											  	<table class="table table-condensed table-hover">
-											  		<tbody>
+													<tbody>
 														<tr ng-repeat="choice in question.choices">
 															<td style="width:75%;">
 																{{ choice.value }}
@@ -113,26 +224,33 @@
 															</td>
 														</tr>
 													</tbody>
-											  	</table>
-											</div> <!-- end .panel.panel-default -->
+												</table>
+											</div>
 										</div>
-									</div>
+									</div> <!-- end .well --> 
 
-									<!-- Question ACTION FORM
+									<!-- QUESTION ACTIONS FORM
 									=============================================-->
 									<div class="form-group">
-										<button type="button" ng-click="saveQuestion(question)" class="btn btn-primary">Save question</button>
+										<button 
+											ng-disabled="!question.query || !question.question_type || (question.question_type != 1 && question.choices.length < 2) || (edit_question_index == null && survey.questions.length > 9)"
+											type="button" 
+											ng-click="saveQuestion(question)" 
+											class="btn btn-primary">Save question</button>
 										<button type="button" ng-click="resetQuestion()" class="btn btn-link">Reset</button>
 									</div>
-  								</div> <!-- end .panel-body -->
-  							</div> <!-- end .panel.panel-default -->
+								</div><!-- end panel-body -->
+							</div> <!-- end .panel.panel-default -->
 						</div> <!-- end .col-md-4 -->
 
-						<!-- Question LIST
-						============================-->
 						<div class="col-md-8">
+							<!-- QUESTION LIST
+							=============================================-->
 							<div class="panel panel-default">
-								<div class="panel-heading">Questions</div>
+								<div class="panel-heading">Questions <span class="badge">{{ survey.questions.length }}</span></div>
+								<div ng-show="survey.questions.length < 1" class="panel-body">
+									<p>Have not yet entered questions. To add a new question, use the form on the left.</p>
+								</div>
 								<table class="table table-hover">
 									<tbody>
 										<tr ng-repeat="question in survey.questions">
@@ -172,23 +290,6 @@
 					</div> <!-- end .row -->
 
 					<div class="row">
-						<div class="col-md-4">
-							<!-- Mail Account Settings
-							============================-->
-							<div ng-hide="mail_account_settings.length > 0">
-								<h5>Mail Account Setting</h5>
-								<p>No mail account settings were found, you need to <strong>create a mail account setting</strong> to submit your survey.</p>
-							</div>
-							<div ng-show="mail_account_settings.length > 0" class="form-group">
-								<label for="c-mail-account-setting">Mail Account Setting</label>
-								<select ng-model="survey.mail_account_setting" class="form-control">
-									<option ng-repeat="mail_account_setting in mail_account_settings" value="{{ mail_account_setting._id }}">{{ mail_account_setting.name }}</option>	
-								</select>
-							</div>		
-						</div> <!-- end .col-md-4 -->
-					</div> <!-- end .row -->
-
-					<div class="row">
 						<div class="col-md-12">
 							<!-- Contacts & Contact List
 							============================-->
@@ -196,16 +297,9 @@
 								<h4>Add or remove contacts and contact lists</h4>
 							</div>
 
-							<div ng-hide="contacts.length > 0" class="form-group">
-								<h5>Contacts</h5>
-								<p>No contacts were found, you need to <strong>create a contact</strong> to submit your survey.</p>
+							<div ng-hide="survey.contacts.length > 0 || survey.contact_lists.length > 0 || !available_list_on" class="has-warning">
+								<p class="help-block">This minimun is one.</p>
 							</div>
-
-							<div ng-hide="contact_lists.length > 0" class="form-group">
-								<h5>Contact lists</h5>
-								<p>No contact lists were found, you need to <strong>create a contact list</strong> to submit your survey.</p>
-							</div>
-
 							<div ng-show="contact_lists.length > 0 && contacts.length > 0" class="form-group">
 								<div class="checkbox">
     								<label>
@@ -217,12 +311,21 @@
 						</div> <!-- end .col-md-12 -->
 					</div> <!-- end .row -->
 
-					<div ng-show="contacts.length > 0 || contact_lists.length > 0" class="row">
-						<div class="col-md-5">
+					<div class="row">
+						
+						<!-- hide if available_list_on -->
+						<div ng-hide="available_list_on" class="col-md-12">
+							<div class="alert alert-warning">
+							  	<strong>Warning!</strong> No contacts found, you need contacts to build your contact list. Turn to the menu Contact > New contact.
+							</div>
+						</div>
+
+						<!-- show if available_list_on -->
+						<div ng-show="available_list_on" class="col-md-5">
 							<!-- Available list
 							====================================-->
 							<div class="panel panel-default">
-							  	<div class="panel-heading">Available</div>
+							  	<div class="panel-heading">Available <span class="badge">{{ contacts.length + contact_lists.length }}</span></div>
 							  	
 							  	<div class="panel-body">
 									<div class="form-group">
@@ -230,46 +333,48 @@
 										<input type="text" name="avaibleFilter" id="c-avaibleFilter" ng-model="avaible_filter" class="form-control">
 									</div>    	
 							  	</div>
-								
-								<table class="table table-condensed table-hover">
-									<tbody>
-										<tr ng-hide="only_contact_lists" ng-repeat="contact in contacts | filter: avaible_filter | orderBy:'name'">
-											<td>
-												<img src="/img/contact.32x32.png">
-											</td>
-											<td>
-												<div>{{ contact.name }}</div>
-												<div><small>{{ contact.email }}</small></div>
-											</td>
-											<td>
-												<button type="button" ng-click="avaibleCheckContact(contact)" class="btn btn-primary">Add</button>
-											</td>
-										</tr>
-										<tr ng-hide="only_contact_lists" class="active">
-											<td colspan="3"></td>
-										</tr>
-										<tr ng-repeat="contact_list in contact_lists | filter: avaible_filter | orderBy:'name'">
-											<td>
-												<img src="/img/contact-list.32x32.png">
-											</td>
-											<td>
-												<div>{{ contact_list.name }}</div>
-												<div><small>{{ contact_list.contacts.length }} contacts</small></div>
-											</td>
-											<td>
-												<button type="button" ng-click="avaibleCheckContactList(contact_list)" class="btn btn-primary">Add</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+								<div style="height: 200px;overflow-y: auto;">
+									<table class="table table-condensed table-hover">
+										<tbody>
+											<tr ng-hide="only_contact_lists" ng-repeat="contact in contacts | filter: avaible_filter | orderBy:'name'">
+												<td>
+													<img src="/img/contact.32x32.png">
+												</td>
+												<td>
+													<div>{{ contact.name }}</div>
+													<div><small>{{ contact.email }}</small></div>
+												</td>
+												<td>
+													<button type="button" ng-click="avaibleCheckContact(contact)" class="btn btn-primary">Add</button>
+												</td>
+											</tr>
+											<tr ng-hide="only_contact_lists" class="active">
+												<td colspan="3"></td>
+											</tr>
+											<tr ng-repeat="contact_list in contact_lists | filter: avaible_filter | orderBy:'name'">
+												<td>
+													<img src="/img/contact-list.32x32.png">
+												</td>
+												<td>
+													<div>{{ contact_list.name }}</div>
+													<div><small>{{ contact_list.contacts.length }} contacts</small></div>
+												</td>
+												<td>
+													<button type="button" ng-click="avaibleCheckContactList(contact_list)" class="btn btn-primary">Add</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div> <!-- end .col-md-4 -->
 
-						<div class="col-md-5">
+						<!-- show if available_list_on -->
+						<div ng-show="available_list_on" class="col-md-5">
 							<!-- Selected list
 							====================================-->
 							<div class="panel panel-default">
-							  	<div class="panel-heading">Selected</div>
+							  	<div class="panel-heading">Selected <span class="badge">{{ survey.contacts.length + survey.contact_lists.length }}</span></div>
 
 							  	<div class="panel-body">
 							    	<div class="form-group">
@@ -277,44 +382,48 @@
 										<input type="text" name="selectedFilter" id="c-selectedFilter" ng-model="selected_filter" class="form-control">
 									</div>
 							  	</div>
-
-							  	<table class="table table-condensed table-hover">
-									<tbody>
-										<tr ng-hide="only_contact_lists" ng-repeat="contact in survey.contacts | filter: selected_filter | orderBy:'name'">
-											<td>
-												<img src="/img/contact.32x32.png">
-											</td>
-											<td>
-												<div>{{ contact.name }}</div>
-												<div><small>{{ contact.email }}</small></div>
-											</td>
-											<td>
-												<button type="button" ng-click="selectedCheckContact(contact)" class="btn btn-primary">Remove</button>
-											</td>
-										</tr>
-										<tr ng-hide="only_contact_lists" class="active">
-											<td colspan="3"></td>
-										</tr>
-										<tr ng-repeat="contact_list in survey.contact_lists | filter: selected_filter | orderBy:'name'">
-											<td>
-												<img src="/img/contact-list.32x32.png">
-											</td>
-											<td>
-												<div>{{ contact_list.name }}</div>
-												<div><small>{{ contact_list.contacts.length }} contacts</small></div>
-											</td>
-											<td>
-												<button type="button" ng-click="selectedCheckContactList(contact_list)" class="btn btn-primary">Remove</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>	
+							  	<div style="height: 200px;overflow-y: auto;">
+							  		<table class="table table-condensed table-hover">
+										<tbody>
+											<tr ng-hide="only_contact_lists" ng-repeat="contact in survey.contacts | filter: selected_filter | orderBy:'name'">
+												<td>
+													<img src="/img/contact.32x32.png">
+												</td>
+												<td>
+													<div>{{ contact.name }}</div>
+													<div><small>{{ contact.email }}</small></div>
+												</td>
+												<td>
+													<button type="button" ng-click="selectedCheckContact(contact)" class="btn btn-primary">Remove</button>
+												</td>
+											</tr>
+											<tr ng-hide="only_contact_lists" class="active">
+												<td colspan="3"></td>
+											</tr>
+											<tr ng-repeat="contact_list in survey.contact_lists | filter: selected_filter | orderBy:'name'">
+												<td>
+													<img src="/img/contact-list.32x32.png">
+												</td>
+												<td>
+													<div>{{ contact_list.name }}</div>
+													<div><small>{{ contact_list.contacts.length }} contacts</small></div>
+												</td>
+												<td>
+													<button type="button" ng-click="selectedCheckContactList(contact_list)" class="btn btn-primary">Remove</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>	
+							  	</div>
 							</div>
 						</div> <!-- end .col-md-4 -->
 					</div> <!-- end .row -->
 					
-					<div>
-						<button type="submit" class="btn btn-primary">Save</button>
+					<div class="form-group">
+						<button 
+							ng-disabled="form.$invalid || survey.questions < 1 || survey.questions.length > 10 || (!survey.contacts.length > 0 && !survey.contact_lists.length > 0)" 
+							type="submit" 
+							class="btn btn-primary">Save</button>
 						<a href="{{ links.back_to_list }}" class="btn btn-link">Back to list</a>
 					</div>
 				</form>
