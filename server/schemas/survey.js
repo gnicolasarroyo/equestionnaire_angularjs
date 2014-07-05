@@ -26,8 +26,52 @@ var schema = new mongoose.Schema({
 	updated_at: 			{ type: Date, default: Date.now() }
 });
 
-
 exports.state_code = { NEWLY_CREATED: 1, UPDATED: 2, ONLINE: 3, FINISH: 4 };
+
+/**
+ * Validations
+ */
+schema.path('title').validate(function(title) {
+    return (typeof title === 'string'); 
+}, 'Invalid type Title');
+
+schema.path('title').validate(function(title) {
+    return (title.length > 4 && title.length < 36);
+}, 'Invalid length Title');
+
+schema.path('introduction').validate(function(introduction) {
+    return (typeof introduction === 'string'); 
+}, 'Invalid type Introduction');
+
+schema.path('introduction').validate(function(introduction) {
+    return (introduction.length > 4 && introduction.length < 251);
+}, 'Invalid length Introduction');
+
+schema.path('questions').validate(function(questions) {
+    return (typeof questions === 'object'); 
+}, 'Invalid type Questions');
+
+schema.path('questions').validate(function(questions) {
+    return (questions.length > 0 && questions.length < 11);
+}, 'Invalid lengte Questions');
+
+schema.path('contacts').validate(function(contacts) {
+    return (typeof contacts === 'object'); 
+}, 'Invalid type Contacts');
+
+schema.path('contacts').validate(function(contacts) {
+    return (contacts.length > 0);
+}, 'Invalid length Contacts');
+
+schema.path('contact_lists').validate(function(contact_lists) {
+    return (typeof contact_lists === 'object'); 
+}, 'Invalid type Contact Lists');
+
+schema.path('contact_lists').validate(function(contact_lists) {
+    return (contact_lists.length > 0);
+}, 'Invalid length Contact Lists');
+
+
 
 
 /**
